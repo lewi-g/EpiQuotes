@@ -6,6 +6,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
+const { DATABASE_URL, PORT } = require('./config');
+const { BlogPost, User } = require('./models');
+
+const app = express();
+
 
 app.use('*', function (req, res) {
   res.status(404).json({ message: 'Not Found' });
