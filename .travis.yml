@@ -2,3 +2,10 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: i0WbTrs616OFf5JLr5jIfe3cJ+O24/igMhm8wjJaHS8bqghnqwlAkIzCpzck/01pk8Of2opahTv75NfvDIv0c418TjcclscoLBq/64RILZxRmtCDnH6qhviPTayhx6NdWuZxv/Pe5UN7zRLy3Fefzl+TkDfA6YYoB52IhzUhqvZUxH+dBnbBNsR048sYeyMFV+I+brq3mkHQ6xTP7f7O6I5RM0QYs2uHWxOUgY2Z7mXoGOmV6Vua15CQM1+wrBNkOuIsCYM83pItm9I6C1HTjbcxHUQHfFpRP1shhVZvxCDyWz+3ipfywYVThrF+tOi1XJY86vMPk2pVn8fbxwiQRGfgK/2Ebyw7+YY7QHloOwnITNIBliMJJDzeiybaoxhwgAiHVpGI26l+JKWIQWLV7LgobkMm0mBsZn6usdZyMHatRsnN7fw0Qa6+r4wtrdy5+Ol7usv8ClwC83KKZJv8dq8+1j9zZS/1nYe+88td42w/PEIFITG31z3Y7L1W3tO9kkOdFRkOcNcnAp8ixZIa2iIhNiP+PGqUEl4OMQVAlWIx2RBEtlH+SqZbG0mCbE6u2dbAQ+XmA4AfrB/UIp9Wq7eUZAQCY4nLwTXIoYGPt700tVpw6V2Zz2341iZtDGX059ilR0hGhFYNqFtELVP4j64Bhso+Y7xGMuQJkuCX7pE=
+  app: EpiQuotes
+  on:
+    repo: lewi-g/EpiQuotes
