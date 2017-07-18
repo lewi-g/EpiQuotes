@@ -15,7 +15,7 @@ const User = require('./models/user-model.js');
 const app = express();
 
 const quotesRouter = require('./quote-router');
-const upvoteRouter = require('./upvote-router');
+//const upvoteRouter = require('./upvote-router');
 const userRouter = require('./user-router');
 
 app.use(morgan('common'));
@@ -28,7 +28,7 @@ app.use(function (req, res, next) {
   next();
 });
 app.use('/quotes', quotesRouter);
-app.use('/upvotes', upvoteRouter);
+//app.use('/upvotes', upvoteRouter);
 app.use('/users', userRouter);
 
 

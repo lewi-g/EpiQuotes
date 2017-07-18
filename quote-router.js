@@ -65,8 +65,17 @@ router.post('/', (req, res) => {
     
   });
 
-//PUT
-router.put('/:id', (req, res) => {
+// var url = require('url'); 
+// var url_parts = url.parse(request.url, true); 
+// var query = url_parts.query;
+
+
+//messes up source bug
+//PUT -- the question mark is used for upvotes and other PUTs should work fine
+router.put('/:id?', (req, res) => {
+  
+
+  //deals with everything besides upvotes
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
 
     res.status(400).json({
@@ -74,13 +83,17 @@ router.put('/:id', (req, res) => {
     });
   } else {
 
-    const updated = {};
+    let updated = {};
     const updateableFields = ['quote', 'source', 'date', 'tag'];
     updateableFields.forEach(field => {
       if (field in req.body) {
         updated[field] = req.body[field];
       }
     });
+    //dealing with upvotes
+    if(req.query.votes = 1) {
+      updated.upvotes = req.body.upvotes+1;
+    }
 
     Quotes
       .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
