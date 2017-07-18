@@ -36,4 +36,5 @@ npm modules:
 mongo mongoose express morgan body-parser 
 chai chai-http mocha faker
 
-
+To connect using the mongo shell:
+mongo ds157549.mlab.com:57549/epiquotes -u dev -p devdev
