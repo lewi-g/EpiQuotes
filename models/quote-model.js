@@ -11,7 +11,6 @@ const quoteSchema = new mongoose.Schema({
   tag: Array, 
   date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },
-
   upvotes: {type: Number, default: 0}
 })
 
@@ -32,27 +31,6 @@ quoteSchema.methods.apiRepr = function() {
   };
 };
 
-//user
-//should push submitted quotes to array
-
-const userSchema = mongoose.Schema({
-  username: String,
-  submittedQuotes: Array
-  //password: 
-})
-
-userSchema.methods.apiRepr = function() {
-  return {
-    id: this._id,
-    username: this.username,
-    submittedQuotes: this.submittedQuotes
-  };
-}
-
-
-
 const Quotes = mongoose.model('Quotes', quoteSchema);
-const User = mongoose.model('User', userSchema);
 
 module.exports = Quotes;
-//module.exports = User;

@@ -5,7 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const { User } = require('./models');
+const User = require('./models/user-model');
 
 //GET
 router.get('/', (req, res) => {
@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  console.log(req.body.username);
   const requiredFields = ['username'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];

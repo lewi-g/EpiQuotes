@@ -5,7 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const { Quotes } = require('./models');
+const Quotes = require('./models/quote-model');
 
 
 //PUT for upvotes --- works only for one upvote at a time by accident but thats what we want??

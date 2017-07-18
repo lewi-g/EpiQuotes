@@ -7,14 +7,16 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const { DATABASE_URL, PORT } = require('./config');
-const Quotes = require('./models');
+// const Quotes = require('./models');
 //const { User } = require('./models');
+const Quotes = require('./models/quote-model.js');
+const User = require('./models/user-model.js');
 
 const app = express();
 
 const quotesRouter = require('./quote-router');
 const upvoteRouter = require('./upvote-router');
-//const userRouter = require('./user-router');
+const userRouter = require('./user-router');
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
@@ -27,7 +29,7 @@ app.use(function (req, res, next) {
 });
 app.use('/quotes', quotesRouter);
 app.use('/upvotes', upvoteRouter);
-//app.use('/users', userRouter);
+app.use('/users', userRouter);
 
 
 
