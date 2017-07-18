@@ -3,13 +3,6 @@
 // stateobject
 const epiQuotes = {
   quotes: [
-    {
-      source: {
-        firstName: String,
-        lastName: String
-      },
-      quote: String,
-    }
   ],
   views: {
     'start': true,
@@ -21,9 +14,7 @@ const epiQuotes = {
 
 // stateModifier functions
 //function to add app.get responses to statobject
-function addQuotes(data) {
-  epiQuotes.quotes = data;
-}
+
 
 // function to 
 
@@ -48,3 +39,23 @@ function renderQuotes(state)/* find data from state*/ {
 
 
 // event listeners
+
+//$('button').on ('click', getQuotes);
+
+
+function getQuotes(e){
+  const opts = {};
+
+  $.getJSON('http://localhost:8080/quotes', opts, addQuotes);
+}
+
+function addQuotes(data) {
+  console.log(data);
+  epiQuotes.quotes = data;
+}
+
+  $.getJSON('http://localhost:8080/quotes', {}, addQuotes);
+
+
+
+
