@@ -4,14 +4,20 @@
 const epiQuotes = {
   quotes: [
     {
-    source: {
-      firstName: String,
-      lastName: String
-    },
-    quote: String,
+      source: {
+        firstName: String,
+        lastName: String
+      },
+      quote: String,
+    }
+  ],
+  views: {
+    'start': true,
+    'displayQuotes': false,
+    'addQuote': false,
+    'confirmAdd': false
   }
-  ]
-}
+};
 
 // stateModifier functions
 //function to add app.get responses to statobject
@@ -24,13 +30,20 @@ function addQuotes(data) {
 
 // render functions
 // send data to DOM
-function renderQuotes(responses) {
-  let source = epiQuotes.quotes[i].sourceName
-  let quote = epiQuotes.quotes[i].quote
-  let html = `	<section>
-		<p>${quote}  and ${source}</p>
-		<button> more</button>
-	</section>`
+function insertQuotesToTemplate(responses) {
+  let quotes = epiQuotes.quotes;
+  quotes.forEach(function (quote) {
+    let html = `
+    <section class = "quote">
+	  	<p>${quote}  and ${sourceName}</p>
+		  <button> more</button>
+	  </section>`;
+    return html;
+  });
+}
+
+function renderQuotes(state)/* find data from state*/ {
+  $('.all-quotes').html(insertQuotesToTemplate);
 }
 
 
