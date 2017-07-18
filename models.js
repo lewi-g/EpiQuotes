@@ -11,8 +11,11 @@ const quoteSchema = mongoose.Schema({
   tag: Array, 
   date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },
+
   upvotes: {type: Number, default: 0}
 })
+
+
 
 quoteSchema.virtual('sourceName').get(function() {
   return `${this.source.firstName} ${this.source.lastName}`.trim();
@@ -27,7 +30,7 @@ quoteSchema.methods.apiRepr = function() {
     date: this.date,
     upvotes: this.upvotes
   };
-}
+};
 
 //user
 //should push submitted quotes to array
