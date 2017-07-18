@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
     .find()
     .exec()
     .then(quotes => {
-      console.log('the test WORKED!');
       res.json(quotes.map(post => post.apiRepr()));
     })
     .catch(err => {
@@ -25,10 +24,11 @@ router.get('/', (req, res) => {
 
 //app.get id
 
+
 //app.get source
 
 router.post('/', (req, res) => {
-  const requiredFields = ['quote', 'source'];
+  const requiredFields = ['quote', 'source', 'tag'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -41,7 +41,10 @@ router.post('/', (req, res) => {
   Quotes
     .create({
       quote: req.body.quote,
-      source: req.body.source
+      source: req.body.source,
+      tag: req.body.tag,
+      date: req.body.date,
+      upvotes: req.body.upvotes
     })
     .then(quote => res.status(201).json(quote.apiRepr()))
     .catch(err => {
@@ -61,7 +64,7 @@ router.put('/:id', (req, res) => {
   } else {
 
     const updated = {};
-    const updateableFields = ['quote', 'source'];
+    const updateableFields = ['quote', 'source', 'date', 'tag'];
     updateableFields.forEach(field => {
       if (field in req.body) {
         updated[field] = req.body[field];

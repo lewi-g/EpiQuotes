@@ -8,16 +8,21 @@ const morgan = require('morgan');
 
 const { DATABASE_URL, PORT } = require('./config');
 const { Quotes } = require('./models');
+const { User } = require('./models');
 
 const app = express();
 
 const quotesRouter = require('./quote-router');
+const upvoteRouter = require('./upvote-router');
+const userRouter = require('./user-router');
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.use('/quotes', quotesRouter);
+app.use('/upvotes', upvoteRouter);
+app.use('/users', userRouter);
 
 
 mongoose.Promise = global.Promise;

@@ -8,9 +8,10 @@ const quoteSchema = mongoose.Schema({
     lastName: String
   },
   quote: String,
-  // tag: {} vs []
+  tag: Array, 
+  date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },
-
+  upvotes: {type: Number, default: 0}
 })
 
 quoteSchema.virtual('sourceName').get(function() {
@@ -21,14 +22,34 @@ quoteSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     source: this.sourceName,
-    quote: this.quote
+    tag: this.tag,
+    quote: this.quote,
+    date: this.date,
+    upvotes: this.upvotes
   };
 }
 
 //user
 //should push submitted quotes to array
 
+const userSchema = mongoose.Schema({
+  username: String,
+  submittedQuotes: Array
+  //password: 
+})
+
+userSchema.methods.apiRepr = function() {
+  return {
+    id: this._id,
+    username: this.username,
+    submittedQuotes: this.submittedQuotes
+  };
+}
+
+
+
 const Quotes = mongoose.model('Quotes', quoteSchema);
-// const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = {Quotes};
+module.exports = {User};
