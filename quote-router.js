@@ -5,9 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const { Quotes } = require('./models');
-
-
+const Quotes = require('./models');
 
 router.get('/', (req, res) => {
   Quotes
@@ -28,31 +26,44 @@ router.get('/', (req, res) => {
 //app.get source
 
 router.post('/', (req, res) => {
+  const userSuppliedTag = req.body.tag;
+  const validTags = ['funny', 'inspirational'];
   const requiredFields = ['quote', 'source', 'tag'];
+
+  let message;
+  
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
+      message = `Missing \`${field}\` in request body`
       console.error(message);
       return res.status(400).send(message);
     }
   }
 
-  Quotes
-    .create({
-      quote: req.body.quote,
-      source: req.body.source,
-      tag: req.body.tag,
-      date: req.body.date,
-      upvotes: req.body.upvotes
-    })
-    .then(quote => res.status(201).json(quote.apiRepr()))
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'Something went wrong' });
-    });
+    // check if array includes userSuppliedTag;
+    // respond apppropeiately in both cases
+    if(!validTags.includes(userSuppliedTag)) {
+      message = `'${userSuppliedTag}' is not a valid tag`
+      res.status(400).send(message);
+    } 
 
-});
+    Quotes
+      .create({
+        quote: req.body.quote,
+        source: req.body.source,
+        tag: req.body.tag,
+        date: req.body.date,
+        upvotes: req.body.upvotes
+      })
+        .then(quote => res.status(201).json(quote.apiRepr()))
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({ error: 'Something went wrong' });
+        });
+      
+    
+  });
 
 //PUT
 router.put('/:id', (req, res) => {
