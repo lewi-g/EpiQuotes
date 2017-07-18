@@ -1,3 +1,5 @@
+'use strict';
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
@@ -63,28 +65,28 @@ describe('Quotes', function () {
   });
 
 
-  it('should list all quotes on GET', function() {
+  it('should list all quotes on GET', function () {
     return chai.request(app)
       .get('/quotes')
-      .then(function(res) {
+      .then(function (res) {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
         const expectedKeys = ['source', 'quote'];
-        res.body.forEach(function(item) {
+        res.body.forEach(function (item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
         });
       });
   });
 
-  it('should create a new item on POST', function() {
-    const newItem = {quote: 'Oh, behave!', source: {firstName: 'Austin', lastName: 'Powers'}};
+  it('should create a new item on POST', function () {
+    const newItem = { quote: 'Oh, behave!', source: { firstName: 'Austin', lastName: 'Powers' } };
     return chai.request(app)
       .post('/quotes')
       .send(newItem)
-      .then(function(res) {
+      .then(function (res) {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
@@ -95,34 +97,34 @@ describe('Quotes', function () {
       });
   });
 
-  it('should update PUT items', function() {
+  it('should update PUT items', function () {
     const updateData = {
       quote: 'The name is Bond, lol',
-      source: {firstName: 'James', lastName: 'Bond'}
+      source: { firstName: 'James', lastName: 'Bond' }
     };
     return chai.request(app)
-    .get('/quotes')
-    .then(function(res) {
-      updateData.id = res.body[0].id;
-      return chai.request(app)
-        .put(`/quotes/${updateData.id}`)
-        .send(updateData)
-    })
-    .then(function(res) {
-      res.should.have.status(201);
-      res.should.be.json;
-      res.body.should.be.a('object');
-    });
+      .get('/quotes')
+      .then(function (res) {
+        updateData.id = res.body[0].id;
+        return chai.request(app)
+          .put(`/quotes/${updateData.id}`)
+          .send(updateData);
+      })
+      .then(function (res) {
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+      });
   });
 
-  it('should delete items on DELETE', function() {
+  it('should delete items on DELETE', function () {
     return chai.request(app)
       .get('/quotes')
-      .then(function(res) {
+      .then(function (res) {
         return chai.request(app)
-          .delete(`/quotes/${res.body[0].id}`)
+          .delete(`/quotes/${res.body[0].id}`);
       })
-      .then(function(res) {
+      .then(function (res) {
         res.should.have.status(204);
       });
   });

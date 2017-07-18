@@ -1,10 +1,11 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const {Quotes} = require('./models');
+const { Quotes } = require('./models');
 
 
 
@@ -18,7 +19,7 @@ router.get('/', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({error: 'something went terribly wrong'});
+      res.status(500).json({ error: 'something went terribly wrong' });
     });
 });
 
@@ -28,7 +29,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const requiredFields = ['quote', 'source'];
-  for (let i=0; i<requiredFields.length; i++) {
+  for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`
@@ -44,8 +45,8 @@ router.post('/', (req, res) => {
     })
     .then(quote => res.status(201).json(quote.apiRepr()))
     .catch(err => {
-        console.error(err);
-        res.status(500).json({error: 'Something went wrong'});
+      console.error(err);
+      res.status(500).json({ error: 'Something went wrong' });
     });
 
 });
@@ -59,21 +60,21 @@ router.put('/:id', (req, res) => {
     });
   } else {
 
-  const updated = {};
-  const updateableFields = ['quote', 'source'];
-  updateableFields.forEach(field => {
-    if (field in req.body) {
-      updated[field] = req.body[field];
-    }
-  });
+    const updated = {};
+    const updateableFields = ['quote', 'source'];
+    updateableFields.forEach(field => {
+      if (field in req.body) {
+        updated[field] = req.body[field];
+      }
+    });
 
-  Quotes
-    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-    .exec()
-    .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
-    .catch(err => res.status(500).json({message: 'Something went wrong'}));
+    Quotes
+      .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+      .exec()
+      .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
+      .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 
-	}
+  }
 });
 
 //DELETE
@@ -82,11 +83,11 @@ router.delete('/:id', (req, res) => {
     .findByIdAndRemove(req.params.id)
     .exec()
     .then(() => {
-      res.status(204).json({message: 'the quote was succesfully deleted'});
+      res.status(204).json({ message: 'the quote was succesfully deleted' });
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({error: 'something went terribly wrong'});
+      res.status(500).json({ error: 'something went terribly wrong' });
     });
 });
 
