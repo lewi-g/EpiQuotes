@@ -24,8 +24,8 @@ find quote by id
 delete quote record
 
 
-
-
+Mongo: operator?
+child schema
 
 
 
