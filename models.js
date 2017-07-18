@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const quoteSchema = mongoose.Schema({
+const quoteSchema = new mongoose.Schema({
   source: {
     firstName: String,
     lastName: String
@@ -54,5 +54,5 @@ userSchema.methods.apiRepr = function() {
 const Quotes = mongoose.model('Quotes', quoteSchema);
 const User = mongoose.model('User', userSchema);
 
-module.exports = {Quotes};
-module.exports = {User};
+module.exports = Quotes;
+//module.exports = User;
