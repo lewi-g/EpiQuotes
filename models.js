@@ -25,7 +25,8 @@ quoteSchema.methods.apiRepr = function() {
   };
 }
 
-
+//user
+//should push submitted quotes to array
 
 const Quotes = mongoose.model('Quotes', quoteSchema);
 // const User = mongoose.model('User', UserSchema);
