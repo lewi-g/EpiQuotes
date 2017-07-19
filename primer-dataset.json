@@ -1,0 +1,18 @@
+{
+	"source": "Rick James",
+	"tag": [
+    	"funny"
+	],
+	"quote": "im rick james, lol",
+	"date": "unknown",
+	"upvotes": 1
+ },
+ {
+	"source": "Adam Sandler",
+	"tag": [
+    	"inspirational"
+	],
+	"quote": "dont cry because it's over. smile because it happened.",
+	"date": "2000",
+	"upvotes": 10
+ },

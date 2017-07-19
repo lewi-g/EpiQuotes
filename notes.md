@@ -44,7 +44,7 @@ random string found in models
 dc725bd48bd7bfde095e0fad46d56797d0314e3d
 
 
-
+validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
 
 ---------ISSUES---------------
 quote-router.js--

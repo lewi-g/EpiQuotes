@@ -7,6 +7,7 @@ const jsonParser = bodyParser.json();
 
 const Quotes = require('./models/quote-model');
 
+//get all quotes
 router.get('/', (req, res) => {
   Quotes
     .find()
@@ -20,14 +21,36 @@ router.get('/', (req, res) => {
     });
 });
 
-//app.get id
+//get quotes by tag
+router.get('/tag/', (req, res) => {
+  const filters = {};
+  const queryableFields = ['tag'];
+    queryableFields.forEach(field => {
+        if (req.query[field]) {
+            filters[field] = req.query[field];
+        }
+    });
+  Quotes
+    .find(filters)
+    .exec()
+    .then(quotes => {
+      res.json(quotes.map(post => post.apiRepr()));
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'something went terribly wrong' });
+    });
+});
+
+
+
 
 
 //app.get source
 
 router.post('/', (req, res) => {
   const userSuppliedTag = req.body.tag;
-  const validTags = ['funny', 'inspirational'];
+  const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
   const requiredFields = ['quote', 'source', 'tag'];
 
   let message;
