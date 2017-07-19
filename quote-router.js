@@ -72,7 +72,7 @@ router.post('/', (req, res) => {
 
 //messes up source bug
 //PUT -- the question mark is used for upvotes and other PUTs should work fine
-router.put('/:id?', (req, res) => {
+router.put('/:id', (req, res) => {
   
 
   //deals with everything besides upvotes
@@ -90,17 +90,16 @@ router.put('/:id?', (req, res) => {
         updated[field] = req.body[field];
       }
     });
-    //dealing with upvotes
-    if(req.query.votes = 1) {
-      updated.upvotes = req.body.upvotes+1;
-    }
+    //dealing with upvotes --- issue: for every put request it always upvotes
+    // if(req.query.votes = 1) {
+    //   updated.upvotes = req.body.upvotes+1;
+    // }
 
     Quotes
       .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
       .exec()
       .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
       .catch(err => res.status(500).json({ message: 'Something went wrong' }));
-
   }
 });
 

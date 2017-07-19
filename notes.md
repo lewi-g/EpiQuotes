@@ -42,3 +42,10 @@ mongo ds157549.mlab.com:57549/epiquotes -u dev -p devdev
 
 random string found in models
 dc725bd48bd7bfde095e0fad46d56797d0314e3d
+
+
+
+
+---------ISSUES---------------
+quote-router.js--
+upvote function in PUT always upvotes on any PUT request
