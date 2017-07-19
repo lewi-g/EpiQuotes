@@ -5,7 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const User = require('./models/user-model');
+const { User } = require('./models');
 
 //GET
 router.get('/', (req, res) => {

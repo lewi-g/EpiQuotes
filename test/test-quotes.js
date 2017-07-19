@@ -8,9 +8,10 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 const { DATABASE_URL } = require('../config');
-const { Quotes } = require('../models/quote-model.js');
+const { Quotes } = require('../models/quote-model');
 const { closeServer, runServer, app } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
+
 
 chai.use(chaiHttp);
 

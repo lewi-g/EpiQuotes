@@ -7,10 +7,10 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const { DATABASE_URL, PORT } = require('./config');
-// const Quotes = require('./models');
-//const { User } = require('./models');
-const Quotes = require('./models/quote-model.js');
-const User = require('./models/user-model.js');
+const { Quotes } = require('./models');
+const { User } = require('./models');
+// const Quotes = require('models/quote-model');
+// const User = require('models/user-model');
 
 const app = express();
 
