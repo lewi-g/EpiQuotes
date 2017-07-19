@@ -49,6 +49,15 @@ function getQuotes(e){
   $.getJSON('http://localhost:8080/quotes', opts, addQuotes);
 }
 
+$('#quote-form').submit(function(event) {
+    event.preventDefault();
+    let  quote= $('#input-quote').val();
+    let sourceName = $('$quote-source').val();
+    
+    // api.post function is called
+    ;
+
+
 function addQuotes(data) {
   console.log(data);
   epiQuotes.quotes = data;
