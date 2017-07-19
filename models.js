@@ -12,7 +12,7 @@ const quoteSchema = new mongoose.Schema({
   date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },
   upvotes: {type: Number, default: 0}
-})
+});
 
 
 
@@ -48,7 +48,7 @@ const userSchema = mongoose.Schema({
   username: String,
   submittedQuotes: Array
   //password: 
-})
+});
 
 userSchema.methods.apiRepr = function() {
   return {
@@ -56,7 +56,7 @@ userSchema.methods.apiRepr = function() {
     username: this.username,
     submittedQuotes: this.submittedQuotes
   };
-}
+};
 
 
 

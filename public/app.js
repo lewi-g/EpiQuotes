@@ -15,23 +15,29 @@ const epiQuotes = {
 // stateModifier functions
 //function to add app.get responses to statobject
 function addQuotesToState(data) {
-  console.log(data);
   epiQuotes.quotes = data;
+;
+  insertQuotesToTemplate(epiQuotes);
 }
-
 
 // render functions
 // send data to DOM
-function insertQuotesToTemplate(responses) {
+function insertQuotesToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
-  quotes.forEach(function (quote) {
+  let quote= quotes.quote
+  quotes.forEach(function (item) {
+    let quote= item.quote;
+    let source= item.source;
     let html = `
     <section class = "quote">
-	  	<p>${quote}  and ${sourceName}</p>
+	  	<p> ${quote} and ${source}</p>
 		  <button> more</button>
 	  </section>`;
-    return html;
-  });
+  console.log(html);
+  $(".all-quotes").append(html);
+    return html; 
+   
+  })
 }
 
 function renderQuotes(state)/* find data from state*/ {
@@ -59,12 +65,10 @@ function switchViews() {
 
 function getQuotes(e) {
   const opts = {};
-
-  $.getJSON('http://localhost:8080/quotes', opts, addQuotes);
+  $.getJSON('http://localhost:8080/quotes', opts, addQuotesToState);
 }
 
 // submitted quotes are added to database
-
 const postQuotes = () => {
   $('#quote-form').submit(function (event) {
     event.preventDefault();
@@ -83,6 +87,7 @@ const postQuotes = () => {
   });
 };
 
+//show form to DOM
 const addQuotesForm = () => {
   $('.add-quotes').on('click', function (event) {
     event.preventDefault();
@@ -109,7 +114,8 @@ const addQuotesForm = () => {
 const findQuotes = () => {
   $('.find-quotes').on('click', function (event) {
     event.preventDefault();
-    console.log('help please');
+    const opts = {};
+    $.getJSON('http://localhost:8080/quotes', opts, addQuotesToState);
   });
 };
 
