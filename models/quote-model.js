@@ -33,4 +33,4 @@
 
 // const Quotes = mongoose.model('Quotes', quoteSchema);
 
-module.exports = Quotes;
+// module.exports = Quotes;
