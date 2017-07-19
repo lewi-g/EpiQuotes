@@ -5,10 +5,13 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const Quotes = require('./models/quote-model');
+const { Quotes } = require('./models');
 
 //get all quotes
+
+
 router.get('/', (req, res) => {
+  console.log('the tag is ' + req.query.tag)
   Quotes
     .find()
     .exec()
