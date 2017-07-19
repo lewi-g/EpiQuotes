@@ -5,18 +5,19 @@ const epiQuotes = {
   quotes: [
   ],
   views: {
-    'start': true,
-    'displayQuotes': false,
-    'addQuote': false,
-    'confirmAdd': false
+    start: true,
+    displayQuotes: false,
+    addQuote: false,
+    confirmAdd: false
   }
 };
 
 // stateModifier functions
 //function to add app.get responses to statobject
-
-
-// function to 
+function addQuotesToState(data) {
+  console.log(data);
+  epiQuotes.quotes = data;
+}
 
 
 // render functions
@@ -37,34 +38,92 @@ function renderQuotes(state)/* find data from state*/ {
   $('.all-quotes').html(insertQuotesToTemplate);
 }
 
+function switchViews() {
+  if (epiQuotes.views.start) {
+    renderHomePage;
+  }
+  else if (epiQuotes.views.displayquotes) {
+    renderQuotes;
+  } else if (epiQuotes.views.addQuote) {
+    renderAddQuoteForm;
+  } else if (epiQuotes.views.confirmAdd) {
+    renderConfirmAdd;
+  }
+}
+
 
 // event listeners
 
-//$('button').on ('click', getQuotes);
+// $('.button').on('click', getQuotes);
 
 
-function getQuotes(e){
+function getQuotes(e) {
   const opts = {};
 
   $.getJSON('http://localhost:8080/quotes', opts, addQuotes);
 }
 
-$('#quote-form').submit(function(event) {
+// submitted quotes are added to database
+
+const postQuotes = () => {
+  $('#quote-form').submit(function (event) {
     event.preventDefault();
-    let  quote= $('#input-quote').val();
-    let sourceName = $('$quote-source').val();
-    
-    // api.post function is called
-    ;
+    let inputQuote = $('#input-quote').val();
+    let inputSource = $('$quote-source').val();
+    let url = 'localhost:8080/quotes';
 
+    console.log(inputQuote )
+    // $.post(
+    //   url,
+    //   { quote: inputQuote, sourceName: inputsource }
+    //   //, [, success ] [, dataType ] 
+    // );
+    //call render function to confirm addition of quote
+    //change view to confirm entry
+  });
+};
 
-function addQuotes(data) {
-  console.log(data);
-  epiQuotes.quotes = data;
+const addQuotesForm = () => {
+  $('.add-quotes').on('click', function (event) {
+    event.preventDefault();
+
+    // $('#quote-form').toggleClass('hidden');
+    let inputForm = `  
+    <form action='/#' id="quote-form">
+      <fieldset >
+        <label for="input-quote">Quote:</label>
+        <input type="text" id="input-quote" required placeholder="An eye for an eye...">
+        <label for "quote-source"> Source: </label>
+        <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
+        <label for "quote-source"> Tag </label>
+        <input type="text" id = "quote-tag" placeholder= "inspirational">
+			 <button class="button" type="submit">Submit Quote</button>
+      </fieldset>
+  </form>`;
+    epiQuotes.views.addQuote = true;
+    epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
+    $('.all-quotes').html(inputForm);
+  });
 }
 
-  $.getJSON('http://localhost:8080/quotes', {}, addQuotes);
+const findQuotes = () => {
+  $('.find-quotes').on('click', function (event) {
+    event.preventDefault();
+    console.log('help please');
+  });
+};
+
+// $.getJSON('http://localhost:8080/quotes', {}, addQuotesToState);
 
 
+$(document).ready(
+  findQuotes(),
+  addQuotesForm(),
+  postQuotes(),
+  // $('.find-quotes').on('click', function (event) {
+  //   event.preventDefault();
+  //   console.log('help please');
+  // })
 
+);
 
