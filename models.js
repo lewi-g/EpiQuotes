@@ -14,8 +14,6 @@ const quoteSchema = new mongoose.Schema({
   upvotes: {type: Number, default: 0}
 })
 
-
-
 quoteSchema.virtual('sourceName').get(function() {
   return `${this.source.firstName} ${this.source.lastName}`.trim();
 });
@@ -33,10 +31,7 @@ quoteSchema.methods.apiRepr = function() {
 
 const Quotes = mongoose.model('Quotes', quoteSchema);
 
-
 module.exports.Quotes = Quotes;
-
-
 
 //user
 //should push submitted quotes to array
@@ -57,9 +52,6 @@ userSchema.methods.apiRepr = function() {
     submittedQuotes: this.submittedQuotes
   };
 }
-
-
-
 
 const User = mongoose.model('User', userSchema);
 

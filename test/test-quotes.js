@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 const { DATABASE_URL } = require('../config');
-const { Quotes } = require('../models/quote-model');
+const { Quotes } = require('../models');
+const { User } = require('../models');
 const { closeServer, runServer, app } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 
@@ -28,6 +29,8 @@ function tearDownDb() {
   });
 }
 
+const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
+
 function seedQuotesData() {
   console.info('seeding Quotes data');
   const seedData = [];
@@ -38,7 +41,9 @@ function seedQuotesData() {
         lastName: faker.name.lastName()
       },
       quote: faker.lorem.sentence(),
-      //content: faker.lorem.text()
+      date: faker.date.past(),
+      upvotes: faker.random.number(),
+      tag: validTags[Math.floor(Math.random() * 5)] 
     });
   }
   // this will return a promise
@@ -70,20 +75,62 @@ describe('Quotes', function () {
     return chai.request(app)
       .get('/quotes')
       .then(function (res) {
+        // console.log(res.body);
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
-        const expectedKeys = ['source', 'quote'];
+        const expectedKeys = ['source', 'quote', 'date', 'upvotes', 'tag'];
         res.body.forEach(function (item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
+          item.id.should.not.be.null;
+          item.source.should.be.a('string');
+          item.tag.should.be.a('array');
+          item.quote.should.be.a('string');
+          item.date.should.be.a('string');
+          item.upvotes.should.be.a('number');
         });
       });
   });
 
+  //doesnt work
+  it.only('should list all quotes of a given tag on GET', function () {
+    let tagtest = 'wacky';
+    return chai.request(app)
+      .get(`/quotes/tag?tag=${tagtest}`)
+      .then(function (res) {
+        console.log(app.param);
+        // console.log(res.body);
+
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('array');
+        res.body.length.should.be.at.least(1);
+        
+        // const expectedKeys = ['tag'];
+        // res.body.forEach(function (item) {
+        //   console.log(item);
+        //   item.should.be.a('object');
+        //   item.should.include.keys(expectedKeys);
+        // });
+
+        const expectedTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
+        res.body.forEach(function(item) {
+          item.tag.should.include(expectedTags);
+        });
+      });
+  });
+
+
+  //doesnt work
+  
   it('should create a new item on POST', function () {
-    const newItem = { quote: 'Oh, behave!', source: { firstName: 'Austin', lastName: 'Powers' } };
+    const newItem = { 
+      quote: 'Oh, behave!', 
+      tag: 'funny',
+      source: { firstName: 'Austin', lastName: 'Powers' } 
+    };
     return chai.request(app)
       .post('/quotes')
       .send(newItem)
@@ -93,15 +140,15 @@ describe('Quotes', function () {
         res.body.should.be.a('object');
         res.body.should.include.keys('id', 'quote', 'source');
         res.body.id.should.not.be.null;
-        //fail from previous examples (node-shopping-list-inegration-tests)
-        //res.body.should.deep.equal(Object.assign(newItem, {id: res.body.id}));
       });
   });
 
   it('should update PUT items', function () {
     const updateData = {
       quote: 'The name is Bond, lol',
-      source: { firstName: 'James', lastName: 'Bond' }
+      source: { firstName: 'James', lastName: 'Bond' },
+      date: 'June 8th 1998',
+      tag: ['pop-culture']
     };
     return chai.request(app)
       .get('/quotes')
@@ -115,6 +162,9 @@ describe('Quotes', function () {
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
+        res.body.quote.should.equal(updateData.quote);
+        res.body.date.should.equal(updateData.date);
+        //res.body.tag.should.equal(updateData.tag); ---this one fails
       });
   });
 
