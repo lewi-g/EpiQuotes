@@ -37,18 +37,22 @@ module.exports.Quotes = Quotes;
 //user
 //should push submitted quotes to array
 const userSchema = mongoose.Schema({
-  username: String,
-  submittedQuotes: Array
-  //password: 
+  username: {type: String, required: true},
+  password: {type: String, required: true},
+  email: {type: String, required: true},
+  //my quotes will be an array of ids that match the id of the quotes
+  myQuotes: Array 
 });
 
 userSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     username: this.username,
-    submittedQuotes: this.submittedQuotes
+    email: this.email,
+    myQuotes: this.myQuotes
   };
 };
+
 
 const User = mongoose.model('User', userSchema);
 

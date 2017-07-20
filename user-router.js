@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
   console.log('in user get endpoint');
   User
     .find()
-    .exec()
-    .then(quotes => {
-      res.json(quotes.map(post => post.apiRepr()));
+    //.exec()
+    .then(users => {
+      res.json(users);
     })
     .catch(err => {
       console.error(err);
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   console.log(req.body.username);
-  const requiredFields = ['username'];
+  const requiredFields = ['username', 'password', 'email'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -33,15 +33,17 @@ router.post('/', (req, res) => {
       return res.status(400).send(message);
     }
   }
-
   User
     .create({
-      username: req.body.username
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
+      myQuotes: req.body.myQuotes
     })
-    .then(quote => res.status(201).json(quote.apiRepr()))
+    .then(response => res.status(201).json(response.apiRepr()))
     .catch(err => {
       console.error(err);
-      res.status(500).json({ error: 'Something went wrong' });
+      res.status(500).json({ error: 'Internal error. Can\'t add user' });
     });
 
 });
