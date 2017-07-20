@@ -77,13 +77,16 @@ function getQuotes(e) {
 
 // submitted quotes are added to database
 const postQuotes = () => {
-  $('#quote-form').submit(function (event) {
+  $('.all-quotes').submit(function (event) {
     event.preventDefault();
     let inputQuote = $('#input-quote').val();
-    let inputSource = $('$quote-source').val();
-    let url = 'localhost:8080/quotes';
+    console.log('input quote --- ' + inputQuote);
+    let inputSource = $('#quote-source').val();
+    console.log('input source --- ' + inputSource);
+    let inputTag = $('#tag-source').val();
+    console.log('tag source --- ' + inputTag);
 
-    console.log(inputQuote )
+    let url = 'localhost:8080/quotes';
     // $.post(
     //   url,
     //   { quote: inputQuote, sourceName: inputsource }
@@ -98,18 +101,22 @@ const postQuotes = () => {
 const addQuotesForm = () => {
   $('.add-quotes').on('click', function (event) {
     event.preventDefault();
-
+    const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
     // $('#quote-form').toggleClass('hidden');
+    
+
+
     let inputForm = `  
-    <form action='/#' id="quote-form">
+    <form action='http://localhost:8080/quotes' method="post" id="quote-form">
       <fieldset >
         <label for="input-quote">Quote:</label>
-        <input type="text" id="input-quote" required placeholder="An eye for an eye...">
-        <label for "quote-source"> Source: </label>
+        <input type="text" name = "quote" id="input-quote" required placeholder="An eye for an eye...">
+        <label for = "quote-source"> Source: </label>
         <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
-        <label for "quote-source"> Tag </label>
+        <label for ="tag-source"> Tag </label>
         <input type="text" id = "quote-tag" placeholder= "inspirational">
-			 <button class="button" type="submit">Submit Quote</button>
+        
+			 <button class="button" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
   </form>`;
     epiQuotes.views.addQuote = true;
