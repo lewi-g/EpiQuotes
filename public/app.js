@@ -11,7 +11,8 @@ const epiQuotes = {
     confirmAdd: false,
     login: false,
     createUser: false
-  }
+  },
+  validTags: ['funny', 'inspirational', 'pop-culture', 'life', 'relationships']
 };
 
 // stateModifier functions
@@ -204,15 +205,15 @@ const postUser = () => {
     console.log('event happened');
     // $('#quote-form').submit(function (event) {
     event.preventDefault();
-    let inputUser = $('#input-user').val();
+    let inputUser = $('#input-username').val();
     console.log('input user --- ' + inputUser);
     let inputPassword = $('#input-password').val();
     console.log('pass --- ' + inputPassword);
     let inputEmail = $('#input-email').val();
-    console.log('email --- ' + inputTag);
+    console.log('email --- ' + inputEmail);
 
     let sendInfo = {
-      username: inputQuote,
+      username: inputUser,
       password: inputPassword,
       email: inputEmail
     }
@@ -226,7 +227,7 @@ const postUser = () => {
           contentType: "application/json; charset=utf-8",
           traditional: true,
           success: function (data) {
-               console.log('quote was added');
+               console.log('post was added');
            }
        });
       epiQuotes.views.addQuote = false;
@@ -249,12 +250,12 @@ const userPostForm = () => {
         <label for ="input-email"> Email: </label>
         <input type="email" id = "input-email" placeholder= "email">
         
-       <button class="button" form="user-form" id = "user-submit" type="submit">Submit Quote</button>
+       <button class="button" form="user-form" id = "user-submit" type="submit">create user</button>
       </fieldset>
   </form>`;
     // epiQuotes.views.addQuote = true;
     // epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
-    $('.all-quotes').html(inputForm);
+    $('.user-post').html(inputForm);
   });
 }
 
