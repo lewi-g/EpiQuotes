@@ -35,9 +35,9 @@ router.get('/tag/', (req, res) => {
   Quotes
     .find(filters)
     .exec()
-    .then(quotes => {
-      res.json(quotes.map(post => post.apiRepr()));
-    })
+    .then(quotes => 
+      res.json(quotes.map(post => post.apiRepr()))
+    )
     .catch(err => {
       console.error(err);
       res.status(500).json({ error: 'something went terribly wrong' });
@@ -109,7 +109,7 @@ router.put('/:id', (req, res) => {
       }
     });
     //dealing with upvotes --- issue: for every put request it always upvotes
-    // if(req.query.votes = 1) {
+    // if (req.query.votes === 1) {
     //   updated.upvotes = req.body.upvotes+1;
     // }
 
