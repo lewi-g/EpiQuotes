@@ -8,6 +8,7 @@ const quoteSchema = new mongoose.Schema({
     lastName: String
   },
   quote: String,
+  // tag should be plural if it's several tags
   tag: Array, 
   date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },

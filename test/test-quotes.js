@@ -96,9 +96,9 @@ describe('Quotes', function () {
 
   //doesnt work
   it.only('should list all quotes of a given tag on GET', function () {
-    let tagtest = 'wacky';
+    let tagTest = 'funny';
     return chai.request(app)
-      .get(`/quotes/tag?tag=${tagtest}`)
+      .get(`/quotes/tag?tag=${tagTest}`)
       .then(function (res) {
         console.log(app.param);
         // console.log(res.body);
@@ -114,10 +114,13 @@ describe('Quotes', function () {
         //   item.should.be.a('object');
         //   item.should.include.keys(expectedKeys);
         // });
-
+// res.body.tags should include req.body.tag in the array 
         const expectedTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
         res.body.forEach(function(item) {
           item.tag.should.include(expectedTags);
+          console.log('WHAT goes on',res.body);
+        // res.body.tags.forEach(function(item){
+        // })
         });
       });
   });
