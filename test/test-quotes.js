@@ -95,38 +95,22 @@ describe('Quotes', function () {
   });
 
   //doesnt work
-  it.only('should list all quotes of a given tag on GET', function () {
-    let tagTest = 'funny';
+  it('should list all quotes of a given tag on GET', function () {
+    let tagTest = validTags[Math.floor(Math.random() * 5)]; 
     return chai.request(app)
       .get(`/quotes/tag?tag=${tagTest}`)
       .then(function (res) {
-        console.log(app.param);
-        // console.log(res.body);
-
+        console.log(res.body, 'Here I AM');
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
-        res.body.length.should.be.at.least(1);
-        
-        // const expectedKeys = ['tag'];
-        // res.body.forEach(function (item) {
-        //   console.log(item);
-        //   item.should.be.a('object');
-        //   item.should.include.keys(expectedKeys);
-        // });
-// res.body.tags should include req.body.tag in the array 
+        // res.body.length.should.be.at.least(1);
         const expectedTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
-        res.body.forEach(function(item) {
-          item.tag.should.include(expectedTags);
-          console.log('WHAT goes on',res.body);
-        // res.body.tags.forEach(function(item){
-        // })
+        res.body.forEach(function(item){
+          item.tag[0].should.equal(tagTest);
         });
       });
   });
-
-
-  //doesnt work
   
   it('should create a new item on POST', function () {
     const newItem = { 
