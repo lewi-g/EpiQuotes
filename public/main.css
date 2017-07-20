@@ -93,3 +93,20 @@ fieldset > button {
 .quote > button {
   margin-bottom: 10px;
 }
+
+/*CONFIRM QUOTES*/
+.confirm {
+  background-color: white;
+  border: 1px solid black;
+  box-sizing: border-box;
+  margin: 20px auto;
+  max-width: 70%;
+}
+
+.confirm > button {
+  background-color: #008080;
+  border-radius: 3px;
+  color: white;
+  margin-bottom: 20px;
+  padding: 3px 12px;
+}

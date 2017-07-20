@@ -47,6 +47,8 @@ router.get('/tag/', (req, res) => {
 //app.get source
 
 router.post('/', (req, res) => {
+  console.log('req.body is....');
+  console.log(req.body);
   const userSuppliedTag = req.body.tag;
   const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
   const requiredFields = ['quote', 'source', 'tag'];
