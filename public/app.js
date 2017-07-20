@@ -8,11 +8,44 @@ const epiQuotes = {
     start: true,
     displayQuotes: false,
     addQuote: false,
-    confirmAdd: false
+    confirmAdd: false,
+    login: false,
+    createUser: false
   }
 };
 
 // stateModifier functions
+//USER LOGIN
+function addLogInToState(data) {
+  epiQuotes.quotes = data;
+;
+  insertQuotesToTemplate(epiQuotes);
+}
+
+// render functions
+// send data to DOM
+function insertLogInToTemplate(epiQuotes) {
+    let html = `
+    <section class = "quote">
+      <p>"${quote}"</p>
+      <p>-${source}</p>
+      <p>made: ${date}</p>
+      <p>${tag}</p>
+      <button> &#9660;&#9660;&#9660;</button>
+    </section>`;
+  console.log(html);
+  $(".all-quotes").append(html);
+    return html; 
+}
+
+
+function renderLogIn(state)/* find data from state*/ {
+  $('.all-quotes').html(insertLogInToTemplate);
+}//END OF USER LOGIN
+
+
+
+
 //function to add app.get responses to statobject
 function addQuotesToState(data) {
   epiQuotes.quotes = data;
@@ -67,8 +100,6 @@ function insertConfirmToTemplate(epiQuotes) {
   console.log(html);
   $(".all-quotes").append(html);
     return html; 
-   
-  
 }
 
 function renderConfirmAdd(state) {
@@ -102,6 +133,7 @@ function getQuotes(e) {
 // submitted quotes are added to database
 const postQuotes = () => {
   $('.all-quotes').submit(function (event) {
+    // $('#quote-form').submit(function (event) {
     event.preventDefault();
     let inputQuote = $('#input-quote').val();
     console.log('input quote --- ' + inputQuote);
@@ -115,9 +147,6 @@ const postQuotes = () => {
       source: inputSource,
       tag: inputTag
     }
-
-
-
 
     let url = '/quotes';
     $.ajax({
@@ -147,7 +176,6 @@ const addQuotesForm = () => {
   $('.add-quotes').on('click', function (event) {
     event.preventDefault();
     const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
-    // $('#quote-form').toggleClass('hidden');
     
 
 
@@ -170,6 +198,66 @@ const addQuotesForm = () => {
   });
 }
 
+const postUser = () => {
+   $('.user-post').submit(function (event) {
+  // $('.user-post').on('click', function (event) {
+    console.log('event happened');
+    // $('#quote-form').submit(function (event) {
+    event.preventDefault();
+    let inputUser = $('#input-user').val();
+    console.log('input user --- ' + inputUser);
+    let inputPassword = $('#input-password').val();
+    console.log('pass --- ' + inputPassword);
+    let inputEmail = $('#input-email').val();
+    console.log('email --- ' + inputTag);
+
+    let sendInfo = {
+      username: inputQuote,
+      password: inputPassword,
+      email: inputEmail
+    }
+
+    let url = '/users';
+    $.ajax({
+          type: "POST",
+          data: JSON.stringify(sendInfo),
+          url: url,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          traditional: true,
+          success: function (data) {
+               console.log('quote was added');
+           }
+       });
+      epiQuotes.views.addQuote = false;
+      epiQuotes.views.confirmAdd = true;
+      renderConfirmAdd();
+  });
+};
+
+const userPostForm = () => {
+  $('.createuser').on('click', function (event) {
+    event.preventDefault();
+
+    let inputForm = `  
+    <form action='http://localhost:8080/users' method="post" id="user-form">
+      <fieldset >
+        <label for="input-username">Username:</label>
+        <input type="text" name = "quote" id="input-username" required placeholder="username">
+        <label for = "input-password">Password:</label>
+        <input type="password" id = "input-password" placeholder= "password">
+        <label for ="input-email"> Email: </label>
+        <input type="email" id = "input-email" placeholder= "email">
+        
+       <button class="button" form="user-form" id = "user-submit" type="submit">Submit Quote</button>
+      </fieldset>
+  </form>`;
+    // epiQuotes.views.addQuote = true;
+    // epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
+    $('.all-quotes').html(inputForm);
+  });
+}
+
 const findQuotes = () => {
   $('.find-quotes').on('click', function (event) {
     event.preventDefault();
@@ -185,6 +273,8 @@ $(document).ready(
   findQuotes(),
   addQuotesForm(),
   postQuotes(),
+  postUser(),
+  userPostForm(),
   // $('.find-quotes').on('click', function (event) {
   //   event.preventDefault();
   //   console.log('help please');
