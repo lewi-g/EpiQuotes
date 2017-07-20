@@ -28,10 +28,17 @@ function insertQuotesToTemplate(epiQuotes) {
   quotes.forEach(function (item) {
     let quote= item.quote;
     let source= item.source;
+    let date= item.date;
+    let tag= item.tag;
+
+    console.log(item);
     let html = `
     <section class = "quote">
-	  	<p> ${quote} and ${source}</p>
-		  <button> more</button>
+      <p>"${quote}"</p>
+      <p>-${source}</p>
+      <p>made: ${date}</p>
+      <p>${tag}</p>
+		  <button> &#9660;&#9660;&#9660;</button>
 	  </section>`;
   console.log(html);
   $(".all-quotes").append(html);
