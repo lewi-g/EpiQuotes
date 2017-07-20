@@ -36,10 +36,6 @@ module.exports.Quotes = Quotes;
 
 //user
 //should push submitted quotes to array
-
-
-//user
-//should push submitted quotes to array
 const userSchema = mongoose.Schema({
   username: String,
   submittedQuotes: Array

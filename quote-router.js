@@ -9,7 +9,6 @@ const { Quotes } = require('./models');
 
 //get all quotes
 
-
 router.get('/', (req, res) => {
   console.log('the tag is ' + req.query.tag)
   Quotes
@@ -83,8 +82,6 @@ router.post('/', (req, res) => {
       console.error(err);
       res.status(500).json({ error: 'Something went wrong' });
     });
-
-
 });
 
 // var url = require('url'); 
