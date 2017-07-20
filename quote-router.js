@@ -5,17 +5,17 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const { Quotes } = require('./models');
+const { Quote } = require('./models');
 
 //get all quotes
 
 router.get('/', (req, res) => {
   console.log('the tag is ' + req.query.tag)
-  Quotes
+  Quote
     .find()
     .exec()
-    .then(quotes => {
-      res.json(quotes.map(post => post.apiRepr()));
+    .then(quote => {
+      res.json(quote.map(post => post.apiRepr()));
     })
     .catch(err => {
       console.error(err);
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     });
 });
 
-//get quotes by tag
+//get quote by tag
 router.get('/tag/', (req, res) => {
   const filters = {};
   const queryableFields = ['tag'];
@@ -32,11 +32,11 @@ router.get('/tag/', (req, res) => {
       filters[field] = req.query[field];
     }
   });
-  Quotes
+  Quote
     .find(filters)
     .exec()
-    .then(quotes => 
-      res.json(quotes.map(post => post.apiRepr()))
+    .then(quote => 
+      res.json(quote.map(post => post.apiRepr()))
     )
     .catch(err => {
       console.error(err);
@@ -69,7 +69,7 @@ router.post('/', (req, res) => {
     res.status(400).send(message);
   }
 
-  Quotes
+  Quote
     .create({
       quote: req.body.quote,
       source: req.body.source,
@@ -113,7 +113,7 @@ router.put('/:id', (req, res) => {
     //   updated.upvotes = req.body.upvotes+1;
     // }
 
-    Quotes
+    Quote
       .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
       .exec()
       .then(updatedPost => res.status(201).json(updatedPost.apiRepr()))
@@ -123,7 +123,7 @@ router.put('/:id', (req, res) => {
 
 //DELETE
 router.delete('/:id', (req, res) => {
-  Quotes
+  Quote
     .findByIdAndRemove(req.params.id)
     .exec()
     .then(() => {

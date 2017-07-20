@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 const quoteSchema = new mongoose.Schema({
+  userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   source: {
     firstName: String,
     lastName: String
@@ -30,9 +31,9 @@ quoteSchema.methods.apiRepr = function() {
   };
 };
 
-const Quotes = mongoose.model('Quotes', quoteSchema);
+const Quote = mongoose.model('Quote', quoteSchema);
 
-module.exports.Quotes = Quotes;
+module.exports.Quote = Quote;
 
 //user
 //should push submitted quotes to array
@@ -41,13 +42,14 @@ const userSchema = mongoose.Schema({
   password: {type: String, required: true},
   email: {type: String, required: true},
   //my quotes will be an array of ids that match the id of the quotes
-  myQuotes: Array 
+  myQuotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Quote'}]
 });
 
 userSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     username: this.username,
+    // password: this.password,
     email: this.email,
     myQuotes: this.myQuotes
   };
