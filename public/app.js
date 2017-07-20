@@ -51,6 +51,30 @@ function renderQuotes(state)/* find data from state*/ {
   $('.all-quotes').html(insertQuotesToTemplate);
 }
 
+function insertConfirmToTemplate(epiQuotes) {
+  // <section class = "quote">
+  //     <p>"${quote}"</p>
+  //     <p>-${source}</p>
+  //     <p>made: ${date}</p>
+  //     <p>${tag}</p>
+  //     <button> &#9660;&#9660;&#9660;</button>
+  //   </section>
+    let html = `
+    <section class = "confirm">
+    <p>You added a quote!</p>
+    <button>ok</button>
+    </section>`;
+  console.log(html);
+  $(".all-quotes").append(html);
+    return html; 
+   
+  
+}
+
+function renderConfirmAdd(state) {
+  $('.all-quotes').html(insertConfirmToTemplate);
+}
+
 function switchViews() {
   if (epiQuotes.views.start) {
     renderHomePage;
@@ -83,19 +107,40 @@ const postQuotes = () => {
     console.log('input quote --- ' + inputQuote);
     let inputSource = $('#quote-source').val();
     console.log('input source --- ' + inputSource);
-    let inputTag = $('#tag-source').val();
+    let inputTag = $('#quote-tag').val();
     console.log('tag source --- ' + inputTag);
 
-    let url = 'localhost:8080/quotes';
-    // $.post(
-    //   url,
-    //   { quote: inputQuote, sourceName: inputsource }
-    //   //, [, success ] [, dataType ] 
-    // );
-    //call render function to confirm addition of quote
-    //change view to confirm entry
+    let sendInfo = {
+      quote: inputQuote,
+      source: inputSource,
+      tag: inputTag
+    }
+
+
+
+
+    let url = '/quotes';
+    $.ajax({
+          type: "POST",
+          data: JSON.stringify(sendInfo),
+          url: url,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          traditional: true,
+          success: function (data) {
+               console.log('quote was added');
+           }
+       });
+      epiQuotes.views.addQuote = false;
+      epiQuotes.views.confirmAdd = true;
+      renderConfirmAdd();
   });
 };
+
+function postQuoteSuccess() {
+  alert('successfully added quote');
+}
+
 
 //show form to DOM
 const addQuotesForm = () => {
@@ -113,7 +158,7 @@ const addQuotesForm = () => {
         <input type="text" name = "quote" id="input-quote" required placeholder="An eye for an eye...">
         <label for = "quote-source"> Source: </label>
         <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
-        <label for ="tag-source"> Tag </label>
+        <label for ="tag-source"> Tag: </label>
         <input type="text" id = "quote-tag" placeholder= "inspirational">
         
 			 <button class="button" from="quote-form" type="submit">Submit Quote</button>
