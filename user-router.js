@@ -19,9 +19,8 @@ const basicStrategy = new BasicStrategy(function (username, password, done) {
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
-      console.log('bcrypt', bcrypt.compare(password, user.password));
-      return bcrypt.compare(password, user.password);
-      //   password === user.password;
+      console.log('bcrypt',user.hashPassword);
+      return bcrypt.compare(password, user.hashPassword);
     })
     .then(isValid => {
       console.log('isValid', isValid);
@@ -67,6 +66,7 @@ router.post('/', (req, res) => {
     .create({
       username: req.body.username,
       password: req.body.password,
+      hashPassword: bcrypt.hashSync(req.body.password, 10),
       email: req.body.email,
       myQuotes: req.body.myQuotes
     })
@@ -101,6 +101,7 @@ router.put('/:id', authenticate, (req, res) => {
 
 // //DELETE
 router.delete('/:id', authenticate, (req, res) => {
+  console.log(req.params.id, 'id test');
   User
     .findByIdAndRemove(req.params.id)
     .exec()

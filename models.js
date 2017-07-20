@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const quoteSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -40,6 +41,7 @@ module.exports.Quote = Quote;
 const userSchema = mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, required: true},
+  hashPassword: {type: String},
   email: {type: String, required: true},
   //my quotes will be an array of ids that match the id of the quotes
   myQuotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Quote'}]
@@ -49,11 +51,24 @@ userSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     username: this.username,
-    // password: this.password,
+    hashPassword: this.hashPassword,
     email: this.email,
     myQuotes: this.myQuotes
   };
 };
+
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt
+    .compare(password, this.password)
+    .then(isValid => isValid);
+};
+
+// the following is done on line 69 of user-router
+// userSchema.statics.hashPassword = function(password) {
+//   return bcrypt
+//     .hash(password, 10)
+//     .then(hash => hash);
+// };
 
 
 const User = mongoose.model('User', userSchema);
