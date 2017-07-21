@@ -28,10 +28,6 @@ Mongo: operator?
 child schema
 
 
-
-
-
-
 npm modules:
 mongo mongoose express morgan body-parser 
 chai chai-http mocha faker
@@ -48,10 +44,12 @@ validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
 
 
 --sort all by most recent
-
-FOR FRIDAY
 -- seed data with 5 quotes per tag
 -- dropdown menu for searching and submitting tags
+-- clear dom when new search is conducted
+FOR FRIDAY
+
+
 -- link front end to search by tag
 
 
