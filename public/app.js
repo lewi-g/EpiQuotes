@@ -126,7 +126,7 @@ function switchViews() {
 // event listeners
 function getQuotes(e) {
   const opts = {};
-  $.getJSON('http://localhost:8080/quotes', opts, addQuotesToState);
+  $.getJSON('/quotes', opts, addQuotesToState);
 }
 
 // submitted quotes are added to database
@@ -164,7 +164,7 @@ const addQuotesForm = () => {
     event.preventDefault();
     const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
     let inputForm = `  
-    <form action='http://localhost:8080/quotes' method="post" id="quote-form">
+    <form action='/quotes' method="post" id="quote-form">
       <fieldset >
         <label for="input-quote">Quote:</label>
         <input type="text" name = "quote" id="input-quote" required placeholder="An eye for an eye...">
@@ -205,7 +205,7 @@ const postUser = () => {
           contentType: "application/json; charset=utf-8",
           traditional: true,
           success: function (data) {
-               
+
            }
        });
       epiQuotes.views.addQuote = false;
@@ -219,7 +219,7 @@ const userPostForm = () => {
     event.preventDefault();
     $('.all-quotes').addClass('hidden');
     let inputForm = `  
-    <form action='http://localhost:8080/users' method="post" id="user-form">
+    <form id="user-form">
       <fieldset >
         <label for="input-username">Username:</label>
         <input type="text" name = "quote" id="input-username" required placeholder="username">
@@ -241,7 +241,7 @@ const findQuotes = () => {
   $('.find-quotes').on('click', function (event) {
     event.preventDefault();
     const opts = {};
-    $.getJSON('http://localhost:8080/quotes', opts, addQuotesToState);
+    $.getJSON('/quotes', opts, addQuotesToState);
   });
 };
 

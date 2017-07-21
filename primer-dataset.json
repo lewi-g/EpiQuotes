@@ -16,3 +16,12 @@
 	"date": "2000",
 	"upvotes": 10
  },
+ {
+  "source": {
+    "firstName": "Chris",
+    "lastName": "Klanac"
+  },
+  "quote": "Underpromise and overdeliver",
+  "tag": ["funny"],
+	"date": "July 2017"
+},
