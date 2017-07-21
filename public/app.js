@@ -217,11 +217,11 @@ const postUser = () => {
     let inputEmail = $('#input-email').val();
 
     let sendInfo = {
-      username: inputUser,
+      userName: inputUser,
       password: inputPassword,
       email: inputEmail
     }
-
+console.log(sendInfo);
     let url = '/users';
     $.ajax({
           type: "POST",

@@ -41,7 +41,7 @@ router.get('/', (req, res) => {
     .find()
     //.exec()
     .then(users => {
-      res.json(users);
+      res.json(users.map(user => user.apiRepr()));
     })
     .catch(err => {
       console.error(err);
