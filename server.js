@@ -27,6 +27,7 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
 app.use('/quotes', quotesRouter);
 //app.use('/upvotes', upvoteRouter);
 app.use('/users', userRouter);

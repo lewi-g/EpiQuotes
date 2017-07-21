@@ -8,8 +8,8 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 const { DATABASE_URL } = require('../config');
-const { Quotes } = require('../models');
-const { User } = require('../models');
+const { Quote } = require('../models');
+// const { User } = require('../models');
 const { closeServer, runServer, app } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 
@@ -43,20 +43,21 @@ function seedQuotesData() {
       quote: faker.lorem.sentence(),
       date: faker.date.past(),
       upvotes: faker.random.number(),
-      tag: validTags[Math.floor(Math.random() * 5)] 
+      tag: validTags[Math.floor(Math.random() * 5)]
     });
   }
   // this will return a promise
-  return Quotes.insertMany(seedData);
+  return Quote.insertMany(seedData);
 }
 
-describe('Quotes', function () {
+describe('Quote', function () {
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
   });
 
   beforeEach(function () {
+    console.log('the Testing has Started');
     return seedQuotesData();
   });
 
@@ -70,12 +71,11 @@ describe('Quotes', function () {
     return closeServer();
   });
 
-
   it('should list all quotes on GET', function () {
     return chai.request(app)
       .get('/quotes')
       .then(function (res) {
-        // console.log(res.body);
+        console.log(res.body);
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
@@ -94,9 +94,8 @@ describe('Quotes', function () {
       });
   });
 
-  //doesnt work
   it('should list all quotes of a given tag on GET', function () {
-    let tagTest = validTags[Math.floor(Math.random() * 5)]; 
+    let tagTest = validTags[Math.floor(Math.random() * 5)];
     return chai.request(app)
       .get(`/quotes/tag?tag=${tagTest}`)
       .then(function (res) {
@@ -106,17 +105,17 @@ describe('Quotes', function () {
         res.body.should.be.a('array');
         // res.body.length.should.be.at.least(1);
         const expectedTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
-        res.body.forEach(function(item){
+        res.body.forEach(function (item) {
           item.tag[0].should.equal(tagTest);
         });
       });
   });
-  
+
   it('should create a new item on POST', function () {
-    const newItem = { 
-      quote: 'Oh, behave!', 
+    const newItem = {
+      quote: 'Oh, behave!',
       tag: 'funny',
-      source: { firstName: 'Austin', lastName: 'Powers' } 
+      source: { firstName: 'Austin', lastName: 'Powers' }
     };
     return chai.request(app)
       .post('/quotes')
