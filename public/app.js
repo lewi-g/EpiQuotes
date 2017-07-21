@@ -10,6 +10,7 @@ const epiQuotes = {
     addQuote: false,
     confirmAdd: false,
     login: false,
+    tag: false,
     createUser: false
   },
   validTags: ['funny', 'inspirational', 'pop-culture', 'life', 'relationships']
@@ -46,9 +47,14 @@ function renderLogIn(state)/* find data from state*/ {
 //function to add app.get responses to statobject
 function addQuotesToState(data) {
   epiQuotes.quotes = data;
-;
   insertQuotesToTemplate(epiQuotes);
 }
+
+function addTagsToState(data) {
+  epiQuotes.quotes = data;
+  insertTagsToTemplate(epiQuotes);
+}
+
 
 // render functions
 // send data to DOM
@@ -73,8 +79,33 @@ function insertQuotesToTemplate(epiQuotes) {
   })
 }
 
+function insertTagsToTemplate(epiQuotes) {
+  let quotes = epiQuotes.quotes;
+  let quote= quotes.quote
+  quotes.forEach(function (item) {
+    let quote= item.quote;
+    let source= item.source;
+    let date= item.date;
+    let tag= item.tag;
+    let html = `
+    <section class = "quote">
+      <p>"${quote}"</p>
+      <p>-${source}</p>
+      <p>made: ${date}</p>
+      <p>${tag}</p>
+      <button> &#9660;&#9660;&#9660;</button>
+    </section>`;
+  $(".all-quotes").append(html);
+    return html;  
+  })
+}
+
 function renderQuotes(state)/* find data from state*/ {
   $('.all-quotes').html(insertQuotesToTemplate);
+}
+
+function renderQuotes(state)/* find data from state*/ {
+  $('.all-quotes').html(insertTagsToTemplate);
 }
 
 function insertConfirmUserToTemplate(epiQuotes) {
@@ -112,7 +143,9 @@ function switchViews() {
   }
   else if (epiQuotes.views.displayquotes) {
     renderQuotes;
-  } else if (epiQuotes.views.addQuote) {
+  } else if (epiQuotes.views.tag){
+    renderTags;
+  }else if (epiQuotes.views.addQuote) {
     renderAddQuoteForm;
   } else if (epiQuotes.views.confirmAdd) {
     renderConfirmQuoteAdd;
@@ -120,11 +153,6 @@ function switchViews() {
 }
 
 // event listeners
-function getQuotes(e) {
-  const opts = {};
-  $.getJSON('/quotes', opts, addQuotesToState);
-}
-
 // submitted quotes are added to database
 const postQuotes = () => {
   $('.all-quotes').submit(function (event) {
@@ -233,6 +261,16 @@ const userPostForm = () => {
   });
 }
 
+const findTags = () => {
+  $('.find-tags-search').on('click', function (event) {
+    event.preventDefault();
+    let inputTag = $('.find-tags-input').val();
+    console.log(inputTag);
+    const opts = {};
+    $.getJSON(`/quotes/tag/?tag=${inputTag}`, opts, addTagsToState);
+  });
+};
+
 const findQuotes = () => {
   $('.find-quotes').on('click', function (event) {
     event.preventDefault();
@@ -241,17 +279,9 @@ const findQuotes = () => {
   });
 };
 
-// $.getJSON('http://localhost:8080/quotes', {}, addQuotesToState);
-//this was supposed to reload the page but didnt work because of scope issues
-// const resetToHome = () => {
-//   $("#reset").on('click', function(event){
-//     event.preventDefault();
-//     $('.all-quotes').replaceWith(originalState.clone());
-//     console.log("something");
-//   })
-// }
 
 $(document).ready(
+  findTags(),
   findQuotes(),
   addQuotesForm(),
   postQuotes(),
