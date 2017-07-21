@@ -267,7 +267,7 @@ const findTags = () => {
   $('.find-tags-search').on('click', function (event) {
     event.preventDefault();
     // $(".all-quotes").detach();
-    let inputTag = $('.find-tags-input').val();
+    let inputTag = $('#list-tags').val();
     console.log(inputTag);
     const opts = {};
     $.getJSON(`/quotes/tag/?tag=${inputTag}`, opts, addTagsToState);
