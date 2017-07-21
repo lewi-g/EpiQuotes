@@ -34,7 +34,7 @@ router.get('/tag/', (req, res) => {
     }
   });
   Quote
-    .find(filters)
+    .find(filters).sort({timeStamp: 'desc'})
     .exec()
     .then(quote => 
       res.json(quote.map(post => post.apiRepr()))
