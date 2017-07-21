@@ -45,7 +45,7 @@ userSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     userName: this.userName,
-    hashPassword: this.hashPassword,
+    // hashPassword: this.hashPassword,
     email: this.email,
     myQuotes: this.myQuotes
   };

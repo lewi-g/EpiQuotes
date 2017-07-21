@@ -19,7 +19,6 @@ const basicStrategy = new BasicStrategy(function (username, password, done) {
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
-      console.log('bcrypt',user.hashPassword);
       return bcrypt.compare(password, user.hashPassword);
     })
     .then(isValid => {
@@ -38,7 +37,6 @@ const authenticate = passport.authenticate('basic', { session: false });
 
 //GET
 router.get('/', (req, res) => {
-  // console.log('in user get endpoint');
   User
     .find()
     //.exec()
@@ -52,7 +50,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log(req.body.username);
   const requiredFields = ['userName', 'password', 'email'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];

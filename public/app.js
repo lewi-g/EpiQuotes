@@ -19,7 +19,6 @@ const epiQuotes = {
 // stateModifier functions
 const originalState = $(".all-quotes").clone();
 
-
 function addLogInToState(data) {
   epiQuotes.quotes = data;
   insertQuotesToTemplate(epiQuotes);
@@ -32,9 +31,6 @@ function insertLogInToTemplate(epiQuotes) {
     <section class = "quote">
       <p>"${quote}"</p>
       <p>-${source}</p>
-      <p>made: ${date}</p>
-      <p>${tag}</p>
-      <button> &#9660;&#9660;&#9660;</button>
     </section>`;
   $(".all-quotes").append(html);
     return html; 
@@ -55,7 +51,6 @@ function addTagsToState(data) {
   insertTagsToTemplate(epiQuotes);
 }
 
-
 // render functions
 // send data to DOM
 function insertQuotesToTemplate(epiQuotes) {
@@ -71,9 +66,7 @@ function insertQuotesToTemplate(epiQuotes) {
     <section class = "quote">
       <p>"${quote}"</p>
       <p>-${source}</p>
-      <p>made: ${date}</p>
       <p>${tag}</p>
-		  <button> &#9660;&#9660;&#9660;</button>
 	  </section>`;
   $(".all-quotes").append(html);
     return html;  
@@ -94,9 +87,7 @@ function insertTagsToTemplate(epiQuotes) {
     <section class = "quote">
       <p>"${quote}"</p>
       <p>-${source}</p>
-      <p>made: ${date}</p>
       <p>${tag}</p>
-      <button> &#9660;&#9660;&#9660;</button>
     </section>`;
   $(".all-quotes").append(html);
     return html;  
