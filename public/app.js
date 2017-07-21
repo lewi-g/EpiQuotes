@@ -80,6 +80,7 @@ function insertQuotesToTemplate(epiQuotes) {
 }
 
 function insertTagsToTemplate(epiQuotes) {
+  // $(".all-quotes").empty();
   let quotes = epiQuotes.quotes;
   let quote= quotes.quote
   quotes.forEach(function (item) {
@@ -95,6 +96,7 @@ function insertTagsToTemplate(epiQuotes) {
       <p>${tag}</p>
       <button> &#9660;&#9660;&#9660;</button>
     </section>`;
+  // $(".all-quotes").clear();
   $(".all-quotes").append(html);
     return html;  
   })
@@ -264,6 +266,7 @@ const userPostForm = () => {
 const findTags = () => {
   $('.find-tags-search').on('click', function (event) {
     event.preventDefault();
+    // $(".all-quotes").detach();
     let inputTag = $('.find-tags-input').val();
     console.log(inputTag);
     const opts = {};
