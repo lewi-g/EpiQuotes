@@ -11,14 +11,16 @@ const epiQuotes = {
     confirmAdd: false,
     login: false,
     createUser: false
-  }
+  },
+  validTags: ['funny', 'inspirational', 'pop-culture', 'life', 'relationships']
 };
 
 // stateModifier functions
-//USER LOGIN
+const originalState = $(".all-quotes").clone();
+
+
 function addLogInToState(data) {
   epiQuotes.quotes = data;
-;
   insertQuotesToTemplate(epiQuotes);
 }
 
@@ -33,7 +35,6 @@ function insertLogInToTemplate(epiQuotes) {
       <p>${tag}</p>
       <button> &#9660;&#9660;&#9660;</button>
     </section>`;
-  console.log(html);
   $(".all-quotes").append(html);
     return html; 
 }
@@ -63,8 +64,6 @@ function insertQuotesToTemplate(epiQuotes) {
     let source= item.source;
     let date= item.date;
     let tag= item.tag;
-
-    console.log(item);
     let html = `
     <section class = "quote">
       <p>"${quote}"</p>
@@ -73,10 +72,8 @@ function insertQuotesToTemplate(epiQuotes) {
       <p>${tag}</p>
 		  <button> &#9660;&#9660;&#9660;</button>
 	  </section>`;
-  console.log(html);
   $(".all-quotes").append(html);
-    return html; 
-   
+    return html;  
   })
 }
 
@@ -84,26 +81,33 @@ function renderQuotes(state)/* find data from state*/ {
   $('.all-quotes').html(insertQuotesToTemplate);
 }
 
-function insertConfirmToTemplate(epiQuotes) {
-  // <section class = "quote">
-  //     <p>"${quote}"</p>
-  //     <p>-${source}</p>
-  //     <p>made: ${date}</p>
-  //     <p>${tag}</p>
-  //     <button> &#9660;&#9660;&#9660;</button>
-  //   </section>
+function insertConfirmUserToTemplate(epiQuotes) {
     let html = `
     <section class = "confirm">
-    <p>You added a quote!</p>
-    <button>ok</button>
+      <p>You have signed up for EpiQuotes!</p>
+      <button id = "reset"value="Refresh Page" onClick="window.location.reload()">ok</button>
     </section>`;
-  console.log(html);
   $(".all-quotes").append(html);
     return html; 
 }
 
-function renderConfirmAdd(state) {
-  $('.all-quotes').html(insertConfirmToTemplate);
+
+function insertConfirmQuoteToTemplate(epiQuotes) {
+    let html = `
+    <section class = "confirm">
+      <p>You added a quote!</p>
+      <button id = "reset"value="Refresh Page" onClick="window.location.reload()">ok</button>
+    </section>`;
+  $(".all-quotes").append(html);
+    return html; 
+}
+
+function renderConfirmUserAdd(state) {
+  $('.user-post').html(insertConfirmUserToTemplate);
+}
+
+function renderConfirmQuoteAdd(state) {
+  $('.all-quotes').html(insertConfirmQuoteToTemplate);
 }
 
 function switchViews() {
@@ -115,16 +119,11 @@ function switchViews() {
   } else if (epiQuotes.views.addQuote) {
     renderAddQuoteForm;
   } else if (epiQuotes.views.confirmAdd) {
-    renderConfirmAdd;
+    renderConfirmQuoteAdd;
   }
 }
 
-
 // event listeners
-
-// $('.button').on('click', getQuotes);
-
-
 function getQuotes(e) {
   const opts = {};
   $.getJSON('http://localhost:8080/quotes', opts, addQuotesToState);
@@ -133,21 +132,15 @@ function getQuotes(e) {
 // submitted quotes are added to database
 const postQuotes = () => {
   $('.all-quotes').submit(function (event) {
-    // $('#quote-form').submit(function (event) {
     event.preventDefault();
     let inputQuote = $('#input-quote').val();
-    console.log('input quote --- ' + inputQuote);
     let inputSource = $('#quote-source').val();
-    console.log('input source --- ' + inputSource);
     let inputTag = $('#quote-tag').val();
-    console.log('tag source --- ' + inputTag);
-
     let sendInfo = {
       quote: inputQuote,
       source: inputSource,
       tag: inputTag
     }
-
     let url = '/quotes';
     $.ajax({
           type: "POST",
@@ -157,28 +150,19 @@ const postQuotes = () => {
           contentType: "application/json; charset=utf-8",
           traditional: true,
           success: function (data) {
-               console.log('quote was added');
            }
        });
       epiQuotes.views.addQuote = false;
       epiQuotes.views.confirmAdd = true;
-      renderConfirmAdd();
+      renderConfirmQuoteAdd();
   });
 };
-
-function postQuoteSuccess() {
-  alert('successfully added quote');
-}
-
 
 //show form to DOM
 const addQuotesForm = () => {
   $('.add-quotes').on('click', function (event) {
     event.preventDefault();
     const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
-    
-
-
     let inputForm = `  
     <form action='http://localhost:8080/quotes' method="post" id="quote-form">
       <fieldset >
@@ -200,19 +184,14 @@ const addQuotesForm = () => {
 
 const postUser = () => {
    $('.user-post').submit(function (event) {
-  // $('.user-post').on('click', function (event) {
-    console.log('event happened');
-    // $('#quote-form').submit(function (event) {
     event.preventDefault();
-    let inputUser = $('#input-user').val();
-    console.log('input user --- ' + inputUser);
+    let inputUser = $('#input-username').val();
+    console.log(inputUser);
     let inputPassword = $('#input-password').val();
-    console.log('pass --- ' + inputPassword);
     let inputEmail = $('#input-email').val();
-    console.log('email --- ' + inputTag);
 
     let sendInfo = {
-      username: inputQuote,
+      username: inputUser,
       password: inputPassword,
       email: inputEmail
     }
@@ -226,19 +205,19 @@ const postUser = () => {
           contentType: "application/json; charset=utf-8",
           traditional: true,
           success: function (data) {
-               console.log('quote was added');
+               
            }
        });
       epiQuotes.views.addQuote = false;
       epiQuotes.views.confirmAdd = true;
-      renderConfirmAdd();
+      renderConfirmUserAdd();
   });
 };
 
 const userPostForm = () => {
   $('.createuser').on('click', function (event) {
     event.preventDefault();
-
+    $('.all-quotes').addClass('hidden');
     let inputForm = `  
     <form action='http://localhost:8080/users' method="post" id="user-form">
       <fieldset >
@@ -249,12 +228,12 @@ const userPostForm = () => {
         <label for ="input-email"> Email: </label>
         <input type="email" id = "input-email" placeholder= "email">
         
-       <button class="button" form="user-form" id = "user-submit" type="submit">Submit Quote</button>
+       <button class="button" form="user-form" id = "user-submit" type="submit">create user</button>
       </fieldset>
   </form>`;
-    // epiQuotes.views.addQuote = true;
-    // epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
-    $('.all-quotes').html(inputForm);
+    epiQuotes.views.addQuote = true;
+    epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
+    $('.user-post').html(inputForm);
   });
 }
 
@@ -267,7 +246,14 @@ const findQuotes = () => {
 };
 
 // $.getJSON('http://localhost:8080/quotes', {}, addQuotesToState);
-
+//this was supposed to reload the page but didnt work because of scope issues
+// const resetToHome = () => {
+//   $("#reset").on('click', function(event){
+//     event.preventDefault();
+//     $('.all-quotes').replaceWith(originalState.clone());
+//     console.log("something");
+//   })
+// }
 
 $(document).ready(
   findQuotes(),
@@ -275,10 +261,5 @@ $(document).ready(
   postQuotes(),
   postUser(),
   userPostForm(),
-  // $('.find-quotes').on('click', function (event) {
-  //   event.preventDefault();
-  //   console.log('help please');
-  // })
-
+  // resetToHome(),
 );
-

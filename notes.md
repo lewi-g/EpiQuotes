@@ -52,3 +52,6 @@ FOR FRIDAY
 --ability to be search by tag
 --sort all by most recent/show submitted quote on confirm screen
 --Testing for user endpoints
+
+sort quotes by time
+Quotes.find({}).sort({date: 'desc'})

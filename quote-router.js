@@ -11,8 +11,9 @@ const { Quote } = require('./models');
 
 router.get('/', (req, res) => {
   console.log('the tag is ' + req.query.tag);
+  
   Quote
-    .find()
+    .find().sort({timeStamp: 'desc'})
     .exec()
     .then(quote => {
       res.json(quote.map(post => post.apiRepr()));
