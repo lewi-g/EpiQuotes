@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   console.log(req.body.username);
-  const requiredFields = ['username', 'password', 'email'];
+  const requiredFields = ['userName', 'password', 'email'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -64,7 +64,7 @@ router.post('/', (req, res) => {
   }
   User
     .create({
-      username: req.body.username,
+      userName: req.body.userName,
       password: req.body.password,
       hashPassword: bcrypt.hashSync(req.body.password, 10),
       email: req.body.email,
