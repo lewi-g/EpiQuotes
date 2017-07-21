@@ -39,13 +39,9 @@ function insertLogInToTemplate(epiQuotes) {
     return html; 
 }
 
-
 function renderLogIn(state)/* find data from state*/ {
   $('.all-quotes').html(insertLogInToTemplate);
 }//END OF USER LOGIN
-
-
-
 
 //function to add app.get responses to statobject
 function addQuotesToState(data) {

@@ -47,10 +47,15 @@ dc725bd48bd7bfde095e0fad46d56797d0314e3d
 validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
 
 
+--sort all by most recent
+
 FOR FRIDAY
---quote post ability smooth
---ability to be search by tag
---sort all by most recent/show submitted quote on confirm screen
+-- seed data with 5 quotes per tag
+-- dropdown menu for searching and submitting tags
+-- link front end to search by tag
+
+
+--show submitted quote on confirm screen
 --Testing for user endpoints
 
 sort quotes by time
