@@ -61,6 +61,7 @@ function addTagsToState(data) {
 function insertQuotesToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
   let quote= quotes.quote
+  $(".quote").addClass('hidden');
   quotes.forEach(function (item) {
     let quote= item.quote;
     let source= item.source;
@@ -82,7 +83,8 @@ function insertQuotesToTemplate(epiQuotes) {
 function insertTagsToTemplate(epiQuotes) {
   // $(".all-quotes").empty();
   let quotes = epiQuotes.quotes;
-  let quote= quotes.quote
+  let quote= quotes.quote;
+  $(".quote").addClass('hidden');
   quotes.forEach(function (item) {
     let quote= item.quote;
     let source= item.source;
@@ -96,7 +98,6 @@ function insertTagsToTemplate(epiQuotes) {
       <p>${tag}</p>
       <button> &#9660;&#9660;&#9660;</button>
     </section>`;
-  // $(".all-quotes").clear();
   $(".all-quotes").append(html);
     return html;  
   })
@@ -190,6 +191,7 @@ const addQuotesForm = () => {
     event.preventDefault();
     const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
     let inputForm = `  
+    <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
     <form action='/quotes' method="post" id="quote-form">
       <fieldset >
         <label for="input-quote">Quote:</label>
