@@ -39,7 +39,7 @@ module.exports.Quote = Quote;
 //user
 //should push submitted quotes to array
 const userSchema = mongoose.Schema({
-  username: {type: String, required: true},
+  userName: {type: String, required: true},
   password: {type: String, required: true},
   hashPassword: {type: String},
   email: {type: String, required: true},
@@ -50,7 +50,7 @@ const userSchema = mongoose.Schema({
 userSchema.methods.apiRepr = function() {
   return {
     id: this._id,
-    username: this.username,
+    userName: this.userName,
     hashPassword: this.hashPassword,
     email: this.email,
     myQuotes: this.myQuotes
