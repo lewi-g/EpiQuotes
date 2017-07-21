@@ -199,7 +199,7 @@ const addQuotesForm = () => {
                 <option value="relationships">relationships</option>
           </select>
 
-			 <button class="button" from="quote-form" type="submit">Submit Quote</button>
+			 <button class="button buffer" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
   </form>`;
     epiQuotes.views.addQuote = true;
@@ -248,11 +248,11 @@ const userPostForm = () => {
     <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
     <form id="user-form">
       <fieldset >
-        <label for="input-username">Username:</label>
+        <label for="input-username" class = "block">Username:</label>
         <input type="text" name = "quote" id="input-username" required placeholder="username">
-        <label for = "input-password">Password:</label>
+        <label for = "input-password" class = "block">Password:</label>
         <input type="password" id = "input-password" placeholder= "password">
-        <label for ="input-email"> Email: </label>
+        <label for ="input-email" class = "block"> Email: </label>
         <input type="email" id = "input-email" placeholder= "email">
         
        <button class="button" form="user-form" id = "user-submit" type="submit">create user</button>

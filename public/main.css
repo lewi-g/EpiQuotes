@@ -18,6 +18,15 @@ body {
   display: none;
 }
 
+.buffer {
+  margin-top: 10px;
+}
+
+
+.block {
+  display:block;
+}
+
 form {
   margin: auto;
   padding: 10px;
