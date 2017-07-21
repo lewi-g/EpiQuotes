@@ -66,7 +66,7 @@ function insertQuotesToTemplate(epiQuotes) {
     <section class = "quote">
       <p>"${quote}"</p>
       <p>-${source}</p>
-      <p>${tag}</p>
+      <p class= "quote-tag-style">${tag}</p>
 	  </section>`;
   $(".all-quotes").append(html);
     return html;  
@@ -87,7 +87,7 @@ function insertTagsToTemplate(epiQuotes) {
     <section class = "quote">
       <p>"${quote}"</p>
       <p>-${source}</p>
-      <p>${tag}</p>
+      <p class= "quote-tag-style">${tag}</p>
     </section>`;
   $(".all-quotes").append(html);
     return html;  
@@ -241,10 +241,11 @@ console.log(sendInfo);
 };
 
 const userPostForm = () => {
-  $('.createuser').on('click', function (event) {
+  $('.create-user').on('click', function (event) {
     event.preventDefault();
     $('.all-quotes').addClass('hidden');
     let inputForm = `  
+    <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
     <form id="user-form">
       <fieldset >
         <label for="input-username">Username:</label>

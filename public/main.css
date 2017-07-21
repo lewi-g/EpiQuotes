@@ -20,7 +20,7 @@ body {
 
 form {
   margin: auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 
@@ -40,6 +40,16 @@ header {
   padding: 10px 0;
 }
 
+/*BUTTONS*/
+.reset-button {
+    background-color: #008080;
+    color: white;
+    margin: 10px;
+    padding-top: 5px;
+}
+
+
+
 
 /*USER LOGIN AND CREATE*/
 
@@ -47,12 +57,18 @@ header {
   margin-top: 20px;
 }
 
+.create-user {
+  background-color: #008080;
+  color: white;
+  margin-top: 10px;
+  padding: 3px 12px;
+}
 
 /*ADD QUOTES*/
 .add-quotes {
   background-color: #008080;
   color: white;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 3px 12px;
 }
 
@@ -99,6 +115,11 @@ fieldset > button {
 .quote > button {
   margin-bottom: 10px;
 }
+
+.quote-tag-style {
+  font-size:90%;
+}
+
 
 /*CONFIRM QUOTES*/
 .confirm {
