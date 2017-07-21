@@ -5,10 +5,7 @@ const bcrypt = require('bcrypt');
 
 const quoteSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  source: {
-    firstName: String,
-    lastName: String
-  },
+  source:  String,
   quote: String,
   // tag should be plural if it's several tags
   tag: Array, 
@@ -17,15 +14,11 @@ const quoteSchema = new mongoose.Schema({
   upvotes: {type: Number, default: 0}
 });
 
-quoteSchema.virtual('sourceName').get(function() {
-  return `${this.source.firstName} ${this.source.lastName}`.trim();
-});
-
 quoteSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     timeStamp: this.timeStamp,
-    source: this.sourceName,
+    source: this.source,
     tag: this.tag,
     quote: this.quote,
     date: this.date,
