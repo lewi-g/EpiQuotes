@@ -10,7 +10,7 @@ const { Quote } = require('./models');
 //get all quotes
 
 router.get('/', (req, res) => {
-  console.log('the tag is ' + req.query.tag)
+  console.log('the tag is ' + req.query.tag);
   Quote
     .find()
     .exec()
@@ -89,8 +89,6 @@ router.post('/', (req, res) => {
 // var url = require('url'); 
 // var url_parts = url.parse(request.url, true); 
 // var query = url_parts.query;
-
-
 //messes up source bug
 //PUT -- the question mark is used for upvotes and other PUTs should work fine
 router.put('/:id', (req, res) => {
