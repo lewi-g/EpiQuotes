@@ -36,10 +36,7 @@ function seedQuotesData() {
   const seedData = [];
   for (let i = 1; i <= 10; i++) {
     seedData.push({
-      source: {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName()
-      },
+      source: faker.name.findName(),
       quote: faker.lorem.sentence(),
       date: faker.date.past(),
       upvotes: faker.random.number(),
@@ -115,7 +112,7 @@ describe('Quote', function () {
     const newItem = {
       quote: 'Oh, behave!',
       tag: 'funny',
-      source: { firstName: 'Austin', lastName: 'Powers' }
+      source:  'Austin Powers'
     };
     return chai.request(app)
       .post('/quotes')
@@ -132,7 +129,7 @@ describe('Quote', function () {
   it('should update PUT items', function () {
     const updateData = {
       quote: 'The name is Bond, lol',
-      source: { firstName: 'James', lastName: 'Bond' },
+      source: 'James Bond' ,
       date: 'June 8th 1998',
       tag: ['pop-culture']
     };
