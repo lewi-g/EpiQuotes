@@ -86,7 +86,9 @@ fieldset > button {
   border: 1px solid black;
   box-sizing: border-box;
   margin: 15px auto;
+  padding: 10px 30px;
   max-width: 70%;
+  word-wrap: break-word;
 }
 
 .quote > p {

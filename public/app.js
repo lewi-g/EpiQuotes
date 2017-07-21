@@ -183,7 +183,7 @@ const postQuotes = () => {
       renderConfirmQuoteAdd();
   });
 };
-
+ // <input type="text" id = "quote-tag" placeholder= "inspirational">
 //show form to DOM
 const addQuotesForm = () => {
   $('.add-quotes').on('click', function (event) {
@@ -196,9 +196,16 @@ const addQuotesForm = () => {
         <input type="text" name = "quote" id="input-quote" required placeholder="An eye for an eye...">
         <label for = "quote-source"> Source: </label>
         <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
-        <label for ="tag-source"> Tag: </label>
-        <input type="text" id = "quote-tag" placeholder= "inspirational">
         
+        <label for ="tag-source"> Tag: </label>
+        <select id="quote-tag">
+                <option value="funny">funny</option>
+                <option value="inspirational">inspirational</option>
+                <option value="pop-culture">pop-culture</option>
+                <option value="life">life</option>
+                <option value="relationships">relationships</option>
+          </select>
+
 			 <button class="button" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
   </form>`;
