@@ -24,6 +24,7 @@ quoteSchema.virtual('sourceName').get(function() {
 quoteSchema.methods.apiRepr = function() {
   return {
     id: this._id,
+    timeStamp: this.timeStamp,
     source: this.sourceName,
     tag: this.tag,
     quote: this.quote,
