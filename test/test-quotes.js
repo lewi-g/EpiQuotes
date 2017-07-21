@@ -96,7 +96,6 @@ describe('Quote', function () {
     return chai.request(app)
       .get(`/quotes/tag?tag=${tagTest}`)
       .then(function (res) {
-        console.log(res.body, 'Here I AM');
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');

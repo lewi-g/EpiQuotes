@@ -38,8 +38,8 @@ seedQuotes = {
 },
 {
   source: {
-    firstName: 'William',
-    lastName: 'McKelvey'
+  'William
+McKelvey'
   },
   quote: 'Let me hide this! I\'ll be right back',
   tag: 'funny',
