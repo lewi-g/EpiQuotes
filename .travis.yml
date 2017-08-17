@@ -6,6 +6,6 @@ deploy:
   provider: heroku
   api_key:
     secure: pGHpBUDM/xVmC+qk4dRzUMGgvRUpub0glX6B756loq1rzxOe6DdPGM3Cga5yBSRIsYzy+/lHAxcIXyXuHXjJZumR3m++mbiJXpwIm6FOVdGnjyh3M502Js9dO5hLwNrVI/B9XvdMx9K4g3+KFOeQ2iyFCgJppN3IXA30TyOfLyZ0l/WYENMmFnNPe9jQBYNhyE3l4XmUY+NBhF4Zk+L+M/h2efl45ATQXiEd29izMS0rNyZrZvNFkSwUUlnYrQRxPDLxrojddX6BKdlQ90hSUcsYle8o/0oivDgKO4GD0OoKjHsgGKWqf1o/GWlcTHmDtNRTctd5h7QXjOPdyL6QHWLBgbPoWoE2qZEpWNuLLBkPZ70JuKPMmVKK0fSDpkDUeulDx7HrYAZBWnOfW5gbGcfFzeJXHHkRYkjoQ5J9UAm41biY0e77gZidWfRwxF2CHnRadQrnnT1BcOOgVTIbgThlfg3gtIi9Tb4qHZp3lul7hqW5/GXbuOIwL6xxAeqYwiqPpl2w/Zl5HU1mcStrINosxis0nGvgwbRYAIcKn4BdoQwnvKniGKdZ+32Y+7zM4KKoxLvQKDvwY+SsKwhcEzw/T2Uhlut39gPL3GAs1ilcckxdqinQaXjG5hf1m/G7HIm+XpaScR12Gx0CG3iFvSjfzWESaVjVzEEAeOJgKj4=
-  app: lewidavid
+  app: epiquotes
   on:
     repo: lewi-g/EpiQuotes
