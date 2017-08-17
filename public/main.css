@@ -3,8 +3,6 @@ fonts----------
 font-family: 'Roboto', sans-serif;
 font-family: 'Bellefair', serif;*/
 
-
-
 * {
   font-family: 'Roboto', sans-serif;
   text-align: center;
@@ -12,7 +10,7 @@ font-family: 'Bellefair', serif;*/
 }
 
 body {
-  background-color: #EBF4FA;
+  background-color: #ebf4fa;
 }
 
 .hidden {
@@ -23,9 +21,8 @@ body {
   margin-top: 10px;
 }
 
-
 .block {
-  display:block;
+  display: block;
 }
 
 form {
@@ -34,15 +31,15 @@ form {
 }
 
 p {
-  font-size: 150%
+  font-size: 150%;
 }
 
 button {
   text-transform: uppercase;
   height: 40px;
-  width: 60px, fit-content;
+  width: fit-content;
+  font-size: 0.75em;
 }
-
 
 /*HEADER*/
 header {
@@ -53,14 +50,11 @@ header {
 
 /*BUTTONS*/
 .reset-button {
-    background-color: #008080;
-    color: white;
-    margin: 10px;
-    padding-top: 5px;
+  background-color: #008080;
+  color: white;
+  margin: 10px;
+  padding-top: 5px;
 }
-
-
-
 
 /*USER LOGIN AND CREATE*/
 
@@ -83,8 +77,14 @@ header {
   padding: 3px 12px;
 }
 
-textarea, input {
+textarea,
+input {
   font-size: 1em;
+}
+
+.quote-label {
+  position: relative;
+  bottom: 2rem;
 }
 
 /*THE SEARCH QUOTE FORM*/
@@ -109,7 +109,6 @@ fieldset > button {
   padding: 3px 12px;
 }
 
-
 /*RENDERED QUOTES*/
 
 .quote {
@@ -132,9 +131,8 @@ fieldset > button {
 }
 
 .quote-tag-style {
-  font-size:90%;
+  font-size: 90%;
 }
-
 
 /*CONFIRM QUOTES*/
 .confirm {
