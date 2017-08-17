@@ -187,20 +187,24 @@ const addQuotesForm = () => {
     <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
     <form action='/quotes' method="post" id="quote-form">
       <fieldset >
-        <label for="input-quote">Quote:</label>
-        <input type="text" name = "quote" id="input-quote" required placeholder="An eye for an eye...">
-        <label for = "quote-source"> Source: </label>
-        <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
-        
-        <label for ="tag-source"> Tag: </label>
-        <select id="quote-tag">
-                <option value="funny">funny</option>
-                <option value="inspirational">inspirational</option>
-                <option value="pop-culture">pop-culture</option>
-                <option value="life">life</option>
-                <option value="relationships">relationships</option>
+        <div>
+          <label for="input-quote">Quote:</label>
+          <textarea type="text" rows="4" name="quote" id="input-quote" required placeholder="An eye for an eye..."></textarea>
+        </div>
+        <div>
+          <label for = "quote-source"> Source: </label>
+          <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
+        <div>
+        <div>
+          <label for ="tag-source"> Tag: </label>
+          <select id="quote-tag">
+            <option value="funny">funny</option>
+            <option value="inspirational">inspirational</option>
+            <option value="pop-culture">pop-culture</option>
+            <option value="life">life</option>
+            <option value="relationships">relationships</option>
           </select>
-
+        </div>
 			 <button class="button buffer" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
   </form>`;
