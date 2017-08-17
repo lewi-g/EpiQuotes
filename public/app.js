@@ -3,6 +3,15 @@
 // stateobject
 const epiQuotes = {
   quotes: [],
+  views: {
+    start: true,
+    displayQuotes: false,
+    addQuote: false,
+    confirmAdd: false,
+    login: false,
+    tag: false,
+    createUser: false
+  },
   validTags: ['funny', 'inspirational', 'pop-culture', 'life', 'relationships']
 };
 
@@ -120,6 +129,19 @@ function renderConfirmQuoteAdd(state) {
   $('.all-quotes').html(insertConfirmQuoteToTemplate);
 }
 
+function switchViews() {
+  if (epiQuotes.views.start) {
+    renderHomePage;
+  } else if (epiQuotes.views.displayquotes) {
+    renderQuotes;
+  } else if (epiQuotes.views.tag) {
+    renderTags;
+  } else if (epiQuotes.views.addQuote) {
+    renderAddQuoteForm;
+  } else if (epiQuotes.views.confirmAdd) {
+    renderConfirmQuoteAdd;
+  }
+}
 
 // event listeners
 // submitted quotes are added to database
@@ -144,6 +166,8 @@ const postQuotes = () => {
       traditional: true,
       success: function(data) {}
     });
+    epiQuotes.views.addQuote = false;
+    epiQuotes.views.confirmAdd = true;
     renderConfirmQuoteAdd();
   });
 };
@@ -184,61 +208,65 @@ const addQuotesForm = () => {
 			 <button class="button buffer" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
   </form>`;
-    
+    epiQuotes.views.addQuote = true;
+    epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
     $('.all-quotes').html(inputForm);
   });
 };
 
-const postUser = () => {
-  $('.user-post').submit(function(event) {
-    event.preventDefault();
-    let inputUser = $('#input-username').val();
-    console.log(inputUser);
-    let inputPassword = $('#input-password').val();
-    let inputEmail = $('#input-email').val();
+// const postUser = () => {
+//   $('.user-post').submit(function(event) {
+//     event.preventDefault();
+//     let inputUser = $('#input-username').val();
+//     console.log(inputUser);
+//     let inputPassword = $('#input-password').val();
+//     let inputEmail = $('#input-email').val();
 
-    let sendInfo = {
-      userName: inputUser,
-      password: inputPassword,
-      email: inputEmail
-    };
-    console.log(sendInfo);
-    let url = '/users';
-    $.ajax({
-      type: 'POST',
-      data: JSON.stringify(sendInfo),
-      url: url,
-      dataType: 'json',
-      contentType: 'application/json; charset=utf-8',
-      traditional: true,
-      success: function(data) {}
-    });
-    renderConfirmUserAdd();
-  });
-};
+//     let sendInfo = {
+//       userName: inputUser,
+//       password: inputPassword,
+//       email: inputEmail
+//     };
+//     console.log(sendInfo);
+//     let url = '/users';
+//     $.ajax({
+//       type: 'POST',
+//       data: JSON.stringify(sendInfo),
+//       url: url,
+//       dataType: 'json',
+//       contentType: 'application/json; charset=utf-8',
+//       traditional: true,
+//       success: function(data) {}
+//     });
+//     epiQuotes.views.addQuote = false;
+//     epiQuotes.views.confirmAdd = true;
+//     renderConfirmUserAdd();
+//   });
+// };
 
-const userPostForm = () => {
-  $('.create-user').on('click', function(event) {
-    event.preventDefault();
-    $('.all-quotes').addClass('hidden');
-    let inputForm = `  
-    <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
-    <form id="user-form">
-      <fieldset >
-        <label for="input-username" class = "block">Username:</label>
-        <input type="text" name = "quote" id="input-username" required placeholder="username">
-        <label for = "input-password" class = "block">Password:</label>
-        <input type="password" id = "input-password" placeholder= "password">
-        <label for ="input-email" class = "block"> Email: </label>
-        <input type="email" id = "input-email" placeholder= "email">
+// const userPostForm = () => {
+//   $('.create-user').on('click', function(event) {
+//     event.preventDefault();
+//     $('.all-quotes').addClass('hidden');
+//     let inputForm = `  
+//     <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
+//     <form id="user-form">
+//       <fieldset >
+//         <label for="input-username" class = "block">Username:</label>
+//         <input type="text" name = "quote" id="input-username" required placeholder="username">
+//         <label for = "input-password" class = "block">Password:</label>
+//         <input type="password" id = "input-password" placeholder= "password">
+//         <label for ="input-email" class = "block"> Email: </label>
+//         <input type="email" id = "input-email" placeholder= "email">
         
-       <button class="button" form="user-form" id = "user-submit" type="submit">create user</button>
-      </fieldset>
-  </form>`;
-   
-    $('.user-post').html(inputForm);
-  });
-};
+//        <button class="button" form="user-form" id = "user-submit" type="submit">create user</button>
+//       </fieldset>
+//   </form>`;
+//     epiQuotes.views.addQuote = true;
+//     epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
+//     $('.user-post').html(inputForm);
+//   });
+// };
 
 const findTags = () => {
   $('.find-tags-search').on('click', function(event) {
@@ -264,7 +292,7 @@ $(document).ready(
   findQuotes(),
   addQuotesForm(),
   postQuotes(),
-  postUser(),
-  userPostForm()
+  // postUser(),
+  // userPostForm()
   // resetToHome(),
 );
