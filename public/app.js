@@ -25,8 +25,6 @@ function addLogInToState(data) {
 
 // render functions
 // send data to DOM
-
-
 //function to add app.get responses to stateobject
 function addQuotesToState(data) {
   epiQuotes.quotes = data;
@@ -42,7 +40,6 @@ function addTagsToState(data) {
 // send data to DOM
 function insertQuotesToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
-  // let quote = quotes.quote; DELETE?
   $('.quote').addClass('hidden');
   quotes.forEach(function(item) {
     let {quote, source, tag} = item;
@@ -60,7 +57,6 @@ function insertQuotesToTemplate(epiQuotes) {
 
 function insertTagsToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
-  // let quote = quotes.quote; DELETE?
   $('.quote').addClass('hidden');
   quotes.forEach(function(item) {
     let {quote, source, tag} = item;
@@ -115,8 +111,7 @@ const postQuotes = () => {
       url: url,
       dataType: 'json',
       contentType: 'application/json; charset=utf-8',
-      traditional: true,
-      success: function(data) {}
+      traditional: true
     });
     epiQuotes.views.addQuote = false;
     epiQuotes.views.confirmAdd = true;
