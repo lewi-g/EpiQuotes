@@ -7,7 +7,6 @@ const quoteSchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   source:  String,
   quote: String,
-  // tag should be plural if it's several tags
   tag: Array, 
   date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },
