@@ -28,6 +28,7 @@ router.get('/', (req, res) => {
 router.get('/tag/', (req, res) => {
   const filters = {};
   const queryableFields = ['tag'];
+
   queryableFields.forEach(field => {
     if (req.query[field]) {
       filters[field] = req.query[field];
@@ -50,12 +51,12 @@ router.get('/tag/', (req, res) => {
 router.post('/', (req, res) => {
   console.log('req.body is....');
   console.log(req.body);
+
   const userSuppliedTag = req.body.tag;
   const validTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
   const requiredFields = ['quote', 'source', 'tag'];
 
   let message;
-
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -65,8 +66,6 @@ router.post('/', (req, res) => {
     }
   }
 
-  // check if array includes userSuppliedTag;
-  // respond apppropeiately in both cases
   if (!validTags.includes(userSuppliedTag)) {
     message = `'${userSuppliedTag}' is not a valid tag`;
     res.status(400).send(message);
@@ -87,21 +86,13 @@ router.post('/', (req, res) => {
     });
 });
 
-// var url = require('url'); 
-// var url_parts = url.parse(request.url, true); 
-// var query = url_parts.query;
-//messes up source bug
 //PUT -- the question mark is used for upvotes and other PUTs should work fine
 router.put('/:id', (req, res) => {
-
-  //deals with everything besides upvotes
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-
     res.status(400).json({
       error: 'Request path id and request body id values must match'
     });
   } else {
-
     let updated = {};
     const updateableFields = ['quote', 'source', 'date', 'tag'];
     updateableFields.forEach(field => {
@@ -109,10 +100,6 @@ router.put('/:id', (req, res) => {
         updated[field] = req.body[field];
       }
     });
-    //dealing with upvotes --- issue: for every put request it always upvotes
-    // if (req.query.votes === 1) {
-    //   updated.upvotes = req.body.upvotes+1;
-    // }
 
     Quote
       .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })

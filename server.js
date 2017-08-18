@@ -2,36 +2,24 @@
 
 //require('dotenv').config();
 const bodyParser = require('body-parser');
-const jsonParser = require('body-parser').json();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const { DATABASE_URL, PORT } = require('./config');
-const { Quote } = require('./models');
-const { User } = require('./models');
 
 const app = express();
-
 const quotesRouter = require('./quote-router');
-const userRouter = require('./user-router');
-//const upvoteRouter = require('./upvote-router');
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
-
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-
 app.use('/quotes', quotesRouter);
-//app.use('/upvotes', upvoteRouter);
-app.use('/users', userRouter);
-
 mongoose.Promise = global.Promise;
 
 app.use('*', function (req, res) {
@@ -75,11 +63,8 @@ function closeServer() {
   });
 }
 
-// if server.js is called directly (aka, with `node server.js`), this block
-// runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
   runServer().catch(err => console.error(err));
 }
-
 
 module.exports = { runServer, app, closeServer };

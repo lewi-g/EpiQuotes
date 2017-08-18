@@ -30,8 +30,6 @@ const Quote = mongoose.model('Quote', quoteSchema);
 
 module.exports.Quote = Quote;
 
-//user
-//should push submitted quotes to array
 const userSchema = mongoose.Schema({
   userName: {type: String, required: true},
   password: {type: String, required: true},
