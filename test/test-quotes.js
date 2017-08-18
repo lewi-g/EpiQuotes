@@ -7,12 +7,10 @@ const mongoose = require('mongoose');
 
 const should = chai.should();
 
-const { DATABASE_URL } = require('../config');
 const { Quote } = require('../models');
 
 const { closeServer, runServer, app } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
-
 
 chai.use(chaiHttp);
 
@@ -66,7 +64,7 @@ describe('Quote', function () {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
-        const expectedKeys = ['source', 'quote', 'date', 'tag'];
+        const expectedKeys = ['source', 'quote', 'tag'];
         res.body.forEach(function (item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
@@ -87,7 +85,7 @@ describe('Quote', function () {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
-        // res.body.length.should.be.at.least(1);
+        res.body.length.should.be.at.least(0);
         res.body.forEach(function (item) {
           item.tag[0].should.equal(tagTest);
         });
@@ -128,7 +126,6 @@ describe('Quote', function () {
           .send(updateData);
       })
       .then(function (res) {
-        console.log(res.body);
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
