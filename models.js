@@ -22,7 +22,6 @@ quoteSchema.methods.apiRepr = function() {
     tag: this.tag,
     quote: this.quote,
     date: this.date,
-    upvotes: this.upvotes
   };
 };
 
@@ -30,39 +29,3 @@ const Quote = mongoose.model('Quote', quoteSchema);
 
 module.exports.Quote = Quote;
 
-const userSchema = mongoose.Schema({
-  userName: {type: String, required: true},
-  password: {type: String, required: true},
-  hashPassword: {type: String},
-  email: {type: String, required: true},
-  //my quotes will be an array of ids that match the id of the quotes
-  myQuotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Quote'}]
-});
-
-userSchema.methods.apiRepr = function() {
-  return {
-    id: this._id,
-    userName: this.userName,
-    // hashPassword: this.hashPassword,
-    email: this.email,
-    myQuotes: this.myQuotes
-  };
-};
-
-userSchema.methods.validatePassword = function(password) {
-  return bcrypt
-    .compare(password, this.password)
-    .then(isValid => isValid);
-};
-
-// the following is done on line 69 of user-router
-// userSchema.statics.hashPassword = function(password) {
-//   return bcrypt
-//     .hash(password, 10)
-//     .then(hash => hash);
-// };
-
-
-const User = mongoose.model('User', userSchema);
-
-module.exports.User = User;

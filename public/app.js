@@ -25,21 +25,9 @@ function addLogInToState(data) {
 
 // render functions
 // send data to DOM
-function insertLogInToTemplate(epiQuotes) {
-  let html = `
-    <section class = "quote">
-      <p>"${quote}"</p>
-      <p>-${source}</p>
-    </section>`;
-  $('.all-quotes').append(html);
-  return html;
-}
 
-function renderLogIn(state) /* find data from state*/ {
-  $('.all-quotes').html(insertLogInToTemplate);
-} //END OF USER LOGIN
 
-//function to add app.get responses to statobject
+//function to add app.get responses to stateobject
 function addQuotesToState(data) {
   epiQuotes.quotes = data;
   insertQuotesToTemplate(epiQuotes);
@@ -54,19 +42,17 @@ function addTagsToState(data) {
 // send data to DOM
 function insertQuotesToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
-  let quote = quotes.quote;
+  // let quote = quotes.quote; DELETE?
   $('.quote').addClass('hidden');
   quotes.forEach(function(item) {
-    let quote = item.quote;
-    let source = item.source;
-    let date = item.date;
-    let tag = item.tag;
-    let html = `
-    <section class = "quote">
-      <p>"${quote}"</p>
-      <p>-${source}</p>
-      <p class= "quote-tag-style">${tag}</p>
-	  </section>`;
+    let {quote, source, tag} = item;
+    let html = (
+      `<section class = "quote">
+        <p>"${quote}"</p>
+        <p>-${source}</p>
+        <p class= "quote-tag-style">${tag}</p>
+      </section>`
+    );
     $('.all-quotes').append(html);
     return html;
   });
@@ -74,7 +60,7 @@ function insertQuotesToTemplate(epiQuotes) {
 
 function insertTagsToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
-  let quote = quotes.quote;
+  // let quote = quotes.quote; DELETE?
   $('.quote').addClass('hidden');
   quotes.forEach(function(item) {
     let quote = item.quote;
@@ -96,16 +82,6 @@ function renderQuotes(state) /* find data from state*/ {
   $('.all-quotes').html(insertQuotesToTemplate);
 }
 
-function insertConfirmUserToTemplate(epiQuotes) {
-  let html = 
-   `<section class = "confirm">
-      <p>You have signed up for EpiQuotes!</p>
-      <button id = "reset"value="Refresh Page" onClick="window.location.reload()">ok</button>
-    </section>`;
-  $('.all-quotes').append(html);
-  return html;
-}
-
 function insertConfirmQuoteToTemplate(epiQuotes) {
   let html = `
     <section class = "confirm">
@@ -116,24 +92,9 @@ function insertConfirmQuoteToTemplate(epiQuotes) {
   return html;
 }
 
-
 function renderConfirmQuoteAdd(state) {
   $('.all-quotes').html(insertConfirmQuoteToTemplate);
 }
-
-// function switchViews() {
-//   if (epiQuotes.views.start) {
-//     renderHomePage;
-//   } else if (epiQuotes.views.displayquotes) {
-//     renderQuotes;
-//   } else if (epiQuotes.views.tag) {
-//     renderTags;
-//   } else if (epiQuotes.views.addQuote) {
-//     renderAddQuoteForm;
-//   } else if (epiQuotes.views.confirmAdd) {
-//     renderConfirmQuoteAdd;
-//   }
-// }
 
 // event listeners
 // submitted quotes are added to database
@@ -164,18 +125,10 @@ const postQuotes = () => {
   });
 };
 
-// <input type="text" id = "quote-tag" placeholder= "inspirational">
 //show form to DOM
 const addQuotesForm = () => {
   $('.add-quotes').on('click', function(event) {
     event.preventDefault();
-    const validTags = [
-      'funny',
-      'inspirational',
-      'pop-culture',
-      'life',
-      'relationships'
-    ];
     let inputForm = `  
     <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
     <form action='/quotes' method="post" id="quote-form">
@@ -185,11 +138,11 @@ const addQuotesForm = () => {
           <textarea type="text" rows="4" name="quote" id="input-quote" required placeholder="An eye for an eye..."></textarea>
         </div>
         <div>
-          <label for = "quote-source"> Source: </label>
+          <label for="quote-source"> Source: </label>
           <input type="text" id = "quote-source" placeholder= "Mahatama Ghandi">
         <div>
         <div>
-          <label for ="tag-source"> Tag: </label>
+          <label for="quote-tag"> Tag: </label>
           <select id="quote-tag">
             <option value="funny">funny</option>
             <option value="inspirational">inspirational</option>
@@ -229,7 +182,4 @@ $(document).ready(
   findQuotes(),
   addQuotesForm(),
   postQuotes()
-  // postUser(),
-  // userPostForm()
-  // resetToHome(),
 );
