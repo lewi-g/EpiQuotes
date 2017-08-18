@@ -10,8 +10,6 @@ show more information: (submitted, tag)
 
 get quotes by tag
 
-
-
 APP.POST
 require quote, date, source (anonymous if blank)
 
@@ -22,7 +20,6 @@ edit tag, source
 APP.DELETE
 find quote by id
 delete quote record
-
 
 Mongo: operator?
 child schema
