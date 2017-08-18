@@ -128,12 +128,13 @@ describe('Quote', function () {
           .send(updateData);
       })
       .then(function (res) {
+        console.log(res.body);
         res.should.have.status(201);
         res.should.be.json;
         res.body.should.be.a('object');
         res.body.quote.should.equal(updateData.quote);
         res.body.date.should.equal(updateData.date);
-        res.body.tag.should.equal(updateData.tag[0]);
+        res.body.tag[0].should.equal(updateData.tag[0]);
       });
   });
 
