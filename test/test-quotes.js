@@ -9,20 +9,15 @@ const should = chai.should();
 
 const { DATABASE_URL } = require('../config');
 const { Quote } = require('../models');
-// const { User } = require('../models');
+
 const { closeServer, runServer, app } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 
 
 chai.use(chaiHttp);
 
-// this function deletes the entire database.
-// we'll call it in an `afterEach` block below
-// to ensure data from one test does not stick
-// around for next one
 function tearDownDb() {
   return new Promise((resolve, reject) => {
-    console.warn('Deleting database');
     mongoose.connection.dropDatabase()
       .then(result => resolve(result))
       .catch(err => reject(err));
@@ -42,7 +37,6 @@ function seedQuotesData() {
       tag: validTags[Math.floor(Math.random() * 5)]
     });
   }
-  // this will return a promise
   return Quote.insertMany(seedData);
 }
 
@@ -53,13 +47,10 @@ describe('Quote', function () {
   });
 
   beforeEach(function () {
-    console.log('the Testing has Started');
     return seedQuotesData();
   });
 
   afterEach(function () {
-    // tear down database so we ensure no state from this test
-    // effects any coming after.
     return tearDownDb();
   });
 
@@ -71,7 +62,6 @@ describe('Quote', function () {
     return chai.request(app)
       .get('/quotes')
       .then(function (res) {
-        console.log(res.body);
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
@@ -98,7 +88,6 @@ describe('Quote', function () {
         res.should.be.json;
         res.body.should.be.a('array');
         // res.body.length.should.be.at.least(1);
-        const expectedTags = ['funny', 'inspirational', 'pop-culture', 'life', 'relationships'];
         res.body.forEach(function (item) {
           item.tag[0].should.equal(tagTest);
         });
@@ -144,7 +133,7 @@ describe('Quote', function () {
         res.body.should.be.a('object');
         res.body.quote.should.equal(updateData.quote);
         res.body.date.should.equal(updateData.date);
-        //res.body.tag.should.equal(updateData.tag); ---this one fails
+        res.body.tag.should.equal(updateData.tag[0]);
       });
   });
 
