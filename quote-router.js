@@ -77,7 +77,6 @@ router.post('/', (req, res) => {
       source: req.body.source,
       tag: req.body.tag,
       date: req.body.date,
-      upvotes: req.body.upvotes
     })
     .then(quote => res.status(201).json(quote.apiRepr()))
     .catch(err => {

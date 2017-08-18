@@ -11,7 +11,6 @@ const quoteSchema = new mongoose.Schema({
   tag: Array, 
   date: {type: String, default: 'unknown'},
   timeStamp: { type: Date, default: Date.now },
-  upvotes: {type: Number, default: 0}
 });
 
 quoteSchema.methods.apiRepr = function() {

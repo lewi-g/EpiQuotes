@@ -39,7 +39,6 @@ function seedQuotesData() {
       source: faker.name.findName(),
       quote: faker.lorem.sentence(),
       date: faker.date.past(),
-      upvotes: faker.random.number(),
       tag: validTags[Math.floor(Math.random() * 5)]
     });
   }
@@ -77,7 +76,7 @@ describe('Quote', function () {
         res.should.be.json;
         res.body.should.be.a('array');
         res.body.length.should.be.at.least(1);
-        const expectedKeys = ['source', 'quote', 'date', 'upvotes', 'tag'];
+        const expectedKeys = ['source', 'quote', 'date', 'tag'];
         res.body.forEach(function (item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
@@ -86,7 +85,6 @@ describe('Quote', function () {
           item.tag.should.be.a('array');
           item.quote.should.be.a('string');
           item.date.should.be.a('string');
-          item.upvotes.should.be.a('number');
         });
       });
   });

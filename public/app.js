@@ -63,16 +63,14 @@ function insertTagsToTemplate(epiQuotes) {
   // let quote = quotes.quote; DELETE?
   $('.quote').addClass('hidden');
   quotes.forEach(function(item) {
-    let quote = item.quote;
-    let source = item.source;
-    let date = item.date;
-    let tag = item.tag;
-    let html = `
-    <section class = "quote">
-      <p>"${quote}"</p>
-      <p>-${source}</p>
-      <p class= "quote-tag-style">${tag}</p>
-    </section>`;
+    let {quote, source, tag} = item;
+    let html = (
+      `<section class = "quote">
+        <p>"${quote}"</p>
+        <p>-${source}</p>
+        <p class= "quote-tag-style">${tag}</p>
+      </section>`
+    );
     $('.all-quotes').append(html);
     return html;
   });
@@ -83,11 +81,12 @@ function renderQuotes(state) /* find data from state*/ {
 }
 
 function insertConfirmQuoteToTemplate(epiQuotes) {
-  let html = `
-    <section class = "confirm">
+  let html = (
+    `<section class = "confirm">
       <p>You added a quote!</p>
       <button id = "reset"value="Refresh Page" onClick="window.location.reload()">ok</button>
-    </section>`;
+    </section>`
+  );
   $('.all-quotes').append(html);
   return html;
 }
