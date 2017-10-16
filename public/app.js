@@ -73,7 +73,7 @@ function insertTagsToTemplate(epiQuotes) {
 }
 
 let tags = '';
-function prepTagsForDom(tags='') {
+function prepTagsForDom() {
   epiQuotes.validTags.map((item) => {
     tags += `<option value=${item}>${item}</option>`;
   });
@@ -167,9 +167,9 @@ const addQuotesForm = () => {
         <div>
           <label for="quote-tag"> Tag: </label>
           <select id="quote-tag">
+          <option><input type="text" id = "new-tag" placeholder=""></option>
 
           </select>
-          <input type="text" id = "new-tag" placeholder="">
         </div>
 			 <button class="button buffer" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
