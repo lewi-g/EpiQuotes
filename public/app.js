@@ -41,8 +41,8 @@ function addTagsToState(data) {
 function insertQuotesToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
   $('.quote').addClass('hidden');
-  quotes.forEach(function(item) {
-    let {quote, source, tag} = item;
+  quotes.forEach(function (item) {
+    let { quote, source, tag } = item;
     let html = (
       `<section class = "quote">
         <p>"${quote}"</p>
@@ -58,8 +58,8 @@ function insertQuotesToTemplate(epiQuotes) {
 function insertTagsToTemplate(epiQuotes) {
   let quotes = epiQuotes.quotes;
   $('.quote').addClass('hidden');
-  quotes.forEach(function(item) {
-    let {quote, source, tag} = item;
+  quotes.forEach(function (item) {
+    let { quote, source, tag } = item;
     let html = (
       `<section class = "quote">
         <p>"${quote}"</p>
@@ -94,11 +94,17 @@ function renderConfirmQuoteAdd(state) {
 // event listeners
 // submitted quotes are added to database
 const postQuotes = () => {
-  $('.all-quotes').submit(function(event) {
+  $('.all-quotes').submit(function (event) {
     event.preventDefault();
     let inputQuote = $('#input-quote').val();
     let inputSource = $('#quote-source').val();
     let inputTag = $('#quote-tag').val();
+    let newTag = $('#new-tag').val();
+    
+    if(newTag !== "") {
+      inputTag = newTag;
+    }
+
     let sendInfo = {
       quote: inputQuote,
       source: inputSource,
@@ -119,12 +125,19 @@ const postQuotes = () => {
   });
 };
 
+function postTags() {
+  $('.add-tag-button').on('click', function (event) {
+    console.log('pl')
+  })
+}
+
 //show form to DOM
 const addQuotesForm = () => {
-  $('.add-quotes').on('click', function(event) {
+  $('.add-quotes').on('click', function (event) {
     event.preventDefault();
     let inputForm = `  
     <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
+    <button class="add-tag-button">Add new tag</button>
     <form action='/quotes' method="post" id="quote-form">
       <fieldset >
         <div>
@@ -138,12 +151,14 @@ const addQuotesForm = () => {
         <div>
           <label for="quote-tag"> Tag: </label>
           <select id="quote-tag">
+            <option></option>
             <option value="funny">funny</option>
             <option value="inspirational">inspirational</option>
             <option value="pop-culture">pop-culture</option>
             <option value="life">life</option>
             <option value="relationships">relationships</option>
           </select>
+          <input type="text" id = "new-tag" placeholder="">
         </div>
 			 <button class="button buffer" from="quote-form" type="submit">Submit Quote</button>
       </fieldset>
@@ -154,8 +169,9 @@ const addQuotesForm = () => {
   });
 };
 
+
 const findTags = () => {
-  $('.find-tags-search').on('click', function(event) {
+  $('.find-tags-search').on('click', function (event) {
     event.preventDefault();
     let inputTag = $('#list-tags').val();
     const opts = {};
@@ -164,7 +180,7 @@ const findTags = () => {
 };
 
 const findQuotes = () => {
-  $('.find-quotes').on('click', function(event) {
+  $('.find-quotes').on('click', function (event) {
     event.preventDefault();
     const opts = {};
     $.getJSON('/quotes', opts, addQuotesToState);
@@ -175,5 +191,7 @@ $(document).ready(
   findTags(),
   findQuotes(),
   addQuotesForm(),
-  postQuotes()
+  postQuotes(),
+  postTags()
+
 );
