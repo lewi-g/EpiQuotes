@@ -12,7 +12,7 @@ const epiQuotes = {
     tag: false,
     createUser: false
   },
-  validTags: ['funny', 'inspirational', 'pop-culture', 'life', 'relationships']
+  validTags: ['show me...','women', 'funny', 'inspirational', 'pop-culture', 'life', 'relationships', 'something new', 'wisdom']
 };
 
 // state Modifier functions
@@ -72,6 +72,20 @@ function insertTagsToTemplate(epiQuotes) {
   });
 }
 
+let tags = '';
+function prepTagsForDom(tags='') {
+  epiQuotes.validTags.map((item) => {
+    tags += `<option value=${item}>${item}</option>`;
+  });
+  return tags;
+}
+
+function addTagsToDom() {
+  prepTagsForDom();
+  console.log('addTags to dom is called' , tags);
+  $('#list-tags').html(tags);
+}
+
 function renderQuotes(state) /* find data from state*/ {
   $('.all-quotes').html(insertQuotesToTemplate);
 }
@@ -119,10 +133,12 @@ const postQuotes = () => {
   });
 };
 
+
 //show form to DOM
 const addQuotesForm = () => {
   $('.add-quotes').on('click', function(event) {
     event.preventDefault();
+    
     let inputForm = `  
     <button class = "reset-button" value="Refresh Page" onClick="window.location.reload()">Go Back</button>
     <form action='/quotes' method="post" id="quote-form">
@@ -138,11 +154,7 @@ const addQuotesForm = () => {
         <div>
           <label for="quote-tag"> Tag: </label>
           <select id="quote-tag">
-            <option value="funny">funny</option>
-            <option value="inspirational">inspirational</option>
-            <option value="pop-culture">pop-culture</option>
-            <option value="life">life</option>
-            <option value="relationships">relationships</option>
+
           </select>
         </div>
 			 <button class="button buffer" from="quote-form" type="submit">Submit Quote</button>
@@ -151,6 +163,7 @@ const addQuotesForm = () => {
     epiQuotes.views.addQuote = true;
     epiQuotes.views.confirmAdd = epiQuotes.views.displayquotes = epiQuotes.views.start = false;
     $('.all-quotes').html(inputForm);
+    $('#quote-tag').html(tags);
   });
 };
 
@@ -172,6 +185,7 @@ const findQuotes = () => {
 };
 
 $(document).ready(
+  addTagsToDom(),
   findTags(),
   findQuotes(),
   addQuotesForm(),
